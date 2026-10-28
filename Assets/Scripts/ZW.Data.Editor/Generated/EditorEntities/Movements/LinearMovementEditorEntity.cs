@@ -31,9 +31,6 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
         [SerializeField()]
         private float _speed;
         
-        [SerializeField()]
-        private float _turnInterval;
-        
         public ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] Animals
         {
             get
@@ -58,21 +55,12 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
             }
         }
         
-        public float TurnInterval
-        {
-            get
-            {
-                return this._turnInterval;
-            }
-        }
-        
         public override ZW.Data.Interfaces.Entities.Movements.ILinearMovementEntity ToEntity()
         {
             var entity = new LinearMovementEntity();
             entity.Animals = this.Animals;
             entity.Id = this.Id;
             entity.Speed = this.Speed;
-            entity.TurnInterval = this.TurnInterval;
             return entity;
         }
     }
