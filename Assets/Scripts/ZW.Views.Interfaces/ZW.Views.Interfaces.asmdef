@@ -1,0 +1,19 @@
+{
+    "name": "ZW.Views.Interfaces",
+    "rootNamespace": "ZW.Views.Interfaces",
+    "references": [
+        "ZW.Views.Models",
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Views.UI.Core.Interfaces"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

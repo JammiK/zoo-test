@@ -1,0 +1,26 @@
+{
+    "name": "ZW.Installers",
+    "rootNamespace": "ZW.Installers",
+    "references": [
+        "ZW.Data",
+        "ZW.Logic",
+        "ZW.Presenters",
+        "ZW.Views",
+        "JG.Core.Installers",
+        "JG.Core.Installers.Containers",
+        "JG.Installers.Core",
+        "JG.Installers.Entities",
+        "JG.Logic.Core.Interfaces",
+        "JG.Logic.Core",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

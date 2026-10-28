@@ -1,0 +1,21 @@
+{
+    "name": "ZW.Logic.Interfaces",
+    "rootNamespace": "ZW.Logic.Interfaces",
+    "references": [
+        "ZW.Logic.Models",
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Data.Entities.Interfaces",
+        "JG.Logic.Streams.Interfaces",
+        "UniRx"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

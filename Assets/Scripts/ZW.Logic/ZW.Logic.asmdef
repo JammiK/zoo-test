@@ -1,0 +1,26 @@
+{
+    "name": "ZW.Logic",
+    "rootNamespace": "ZW.Logic",
+    "references": [
+        "ZW.Logic.Models",
+        "ZW.Logic.Interfaces",
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Data.Entities.Interfaces",
+        "JG.Logic.Core.Interfaces",
+        "JG.Logic.Streams.Interfaces",
+        "JG.Logic.Streams",
+        "JG.Core.Installers.Containers",
+        "UniRx",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

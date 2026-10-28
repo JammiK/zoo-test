@@ -1,0 +1,21 @@
+{
+    "name": "JG.Installers.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:47230b5a46e994f0c892620530058224",
+        "GUID:5f68fb4ea3f6a4c059e37c2e931dcfd6",
+        "GUID:686708deb596e481ca8e7ccb3ce58a86",
+        "GUID:ab9c595adf2cd42498ebc0b81b5d0c81",
+        "GUID:0f04b15c29cc540e3b19c638222ba433",
+        "GUID:a73752d8daa794df99a95db5ab2f6502"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

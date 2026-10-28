@@ -1,0 +1,19 @@
+{
+    "name": "JG.Presenters.Core.Interfaces",
+    "references": [
+        "GUID:a73752d8daa794df99a95db5ab2f6502",
+        "Unity.Addressables",
+        "UniTask",
+        "Unity.ResourceManager",
+        "UniTask.Addressables"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,21 @@
+{
+    "name": "JG.Installers.Entities",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ab9c595adf2cd42498ebc0b81b5d0c81",
+        "GUID:cdbf9ce4c129a423b9e71c02152c21a1",
+        "GUID:aa9fb33f21a6f4781854080e87619a60",
+        "GUID:686708deb596e481ca8e7ccb3ce58a86",
+        "GUID:978aa072d6d81f34181ceb223eb2f834",
+        "GUID:e59c95b6626214fdf915afa407b3dadc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

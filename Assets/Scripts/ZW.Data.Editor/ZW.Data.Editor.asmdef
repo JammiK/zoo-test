@@ -1,0 +1,25 @@
+{
+    "name": "ZW.Data.Editor",
+    "rootNamespace": "ZW.Data.Editor",
+    "references": [
+        "ZW.Data",
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Data.Entities.Interfaces",
+        "JG.Data.Entities",
+        "JG.Data.Entities.Editor",
+        "JG.Extensions",
+        "JG.Extensions.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

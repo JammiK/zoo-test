@@ -1,0 +1,25 @@
+{
+    "name": "JG.Presenters.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1e8291ef45ff248bba09f6af3c498892",
+        "GUID:a73752d8daa794df99a95db5ab2f6502",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:f4a10f37e159f4f6d84c7640cb5e6314",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:b6337ee79b30c4e2fb225a4c1f195a91",
+        "GUID:037c935d6c1884081af8e5a1e57ceacf",
+        "UniTask",
+        "Unity.ResourceManager",
+        "UniTask.Addressables"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
