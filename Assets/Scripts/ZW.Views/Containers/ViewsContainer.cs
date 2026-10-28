@@ -13,6 +13,7 @@ namespace ZW.Views.Containers
         {
             Container.ViewBind<IWorldContainerView>();
             Container.ViewBind<ICameraView>();
+            Container.ViewBind<IPhysicsProbeView>();
             Container.ViewBind<IDeathCounterView>();
             Container.ViewBind<IApplicationLifecycleView>();
         }

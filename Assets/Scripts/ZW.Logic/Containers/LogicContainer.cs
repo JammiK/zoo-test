@@ -51,6 +51,7 @@ namespace ZW.Logic.Containers
             Container.SelfBind<LevelAreaService>();
             Container.SelfBind<AreaReturnService>();
             Container.SelfBind<AnimalSpawnPickService>();
+            Container.SelfBind<SpawnPointService>();
             Container.SelfBind<JumpMovementStrategy>();
             Container.SelfBind<LinearMovementStrategy>();
             Container.SelfBind<ObstacleBounceService>();

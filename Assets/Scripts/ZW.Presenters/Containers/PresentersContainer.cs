@@ -4,6 +4,7 @@ using ZW.Presenters.Presenters.Levels;
 using ZW.Presenters.Presenters.Lifecycle;
 using ZW.Presenters.Presenters.Stats;
 using ZW.Presenters.Providers.Animals;
+using ZW.Presenters.Services.Spawns;
 
 namespace ZW.Presenters.Containers
 {
@@ -14,6 +15,7 @@ namespace ZW.Presenters.Containers
         static PresentersContainer()
         {
             Container.SelfBind<AnimalActorProvider>();
+            Container.SelfBind<PhysicsSpawnPointValidator>();
 
             Container.SelfBind<LevelPresenter>();
             Container.SelfBind<AnimalActorPresenter>();
