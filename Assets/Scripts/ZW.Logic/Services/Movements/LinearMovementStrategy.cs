@@ -20,7 +20,7 @@ namespace ZW.Logic.Services.Movements
 
         public bool CanMove(IAnimalEntity entity)
         {
-            return GetConfig(entity) != null;
+            return entity != null && GetConfig(entity) != null;
         }
 
         public MovementDecision Decide(IAnimalModel animal, MovementContext context)

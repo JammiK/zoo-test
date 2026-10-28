@@ -5,6 +5,7 @@ using ZW.Logic.Services.Levels;
 using ZW.Logic.Services.Movements;
 using ZW.Logic.Services.Spawns;
 using ZW.Logic.Streams.Animals;
+using ZW.Logic.Streams.Zoo;
 using ZW.Logic.Systems.FoodChains;
 using ZW.Logic.Systems.Movements;
 using ZW.Logic.Systems.Saves;
@@ -30,6 +31,7 @@ namespace ZW.Logic.Containers
             Container.SelfBind<AnimalMotionStream>();
             Container.SelfBind<AnimalEatenStream>();
             Container.SelfBind<AnimalDiedStream>();
+            Container.SelfBind<ZooStartedStream>();
         }
 
         private static void InstallSystems()
@@ -40,6 +42,7 @@ namespace ZW.Logic.Containers
             Container.SelfBind<AnimalObstacleSystem>();
             Container.SelfBind<AnimalCollisionSystem>();
             Container.SelfBind<AnimalDeathSystem>();
+            Container.SelfBind<ZooStartSystem>();
             Container.SelfBind<ZooSaveSystem>();
             Container.SelfBind<ZooTickSystem>();
         }

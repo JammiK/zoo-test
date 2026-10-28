@@ -7,6 +7,7 @@ using ZW.Data.Interfaces.Models.Animals;
 using ZW.Data.Interfaces.Providers.Animals;
 using ZW.Data.Interfaces.Types.Animals;
 using ZW.Logic.Interfaces.Streams.Animals;
+using ZW.Logic.Interfaces.Streams.Zoo;
 using ZW.Logic.Interfaces.Systems.FoodChains;
 using ZW.Logic.Interfaces.Systems.Movements;
 using ZW.Presenters.Extensions;
@@ -30,11 +31,13 @@ namespace ZW.Presenters.Presenters.Animals
         private readonly IUpdateSystem _updateSystem;
         private readonly IDisposable _spawnedSubscription;
         private readonly IDisposable _diedSubscription;
+        private readonly IDisposable _startedSubscription;
 
         public AnimalActorPresenter(
             IAnimalProvider animalProvider,
             IAnimalSpawnedStream spawnedStream,
             IAnimalDiedStream diedStream,
+            IZooStartedStream startedStream,
             IViewPoolService viewPoolService,
             IWorldContainerView worldContainerView,
             IAnimalActorProvider actorProvider,
@@ -51,11 +54,7 @@ namespace ZW.Presenters.Presenters.Animals
             _obstacleSystem = obstacleSystem;
             _updateSystem = updateSystem;
 
-            foreach (var animal in animalProvider.GetAlive())
-            {
-                SpawnAsync(animal).Forget();
-            }
-
+            _startedSubscription = startedStream.Subscribe(_ => SpawnRestored(animalProvider));
             _spawnedSubscription = spawnedStream.Subscribe(animal => SpawnAsync(animal).Forget());
             _diedSubscription = diedStream.Subscribe(Despawn);
             _updateSystem.AddFixed(SyncPositions);
@@ -65,7 +64,19 @@ namespace ZW.Presenters.Presenters.Animals
         {
             _spawnedSubscription.Dispose();
             _diedSubscription.Dispose();
+            _startedSubscription.Dispose();
             _updateSystem.RemoveFixed(SyncPositions);
+        }
+
+        private void SpawnRestored(IAnimalProvider animalProvider)
+        {
+            foreach (var animal in animalProvider.GetAlive())
+            {
+                if (!_actorProvider.TryGet(animal.Uid, out _))
+                {
+                    SpawnAsync(animal).Forget();
+                }
+            }
         }
 
         private async UniTaskVoid SpawnAsync(IAnimalModel animal)

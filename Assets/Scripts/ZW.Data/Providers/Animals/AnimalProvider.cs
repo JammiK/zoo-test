@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using JG.Data.Entities.Interfaces.Providers.Contexts;
 using ZW.Data.Interfaces.Contexts;
 using ZW.Data.Interfaces.Models.Animals;
@@ -24,12 +23,18 @@ namespace ZW.Data.Providers.Animals
 
         public IEnumerable<IAnimalModel> GetAlive()
         {
-            return GetAll().Where(animal => animal.State == AnimalState.Alive);
+            foreach (var animal in GetAll())
+            {
+                if (animal.State == AnimalState.Alive)
+                {
+                    yield return animal;
+                }
+            }
         }
 
         public IAnimalModel Get(int uid)
         {
-            return GetAll().FirstOrDefault(animal => animal.Uid == uid);
+            return _contextProvider.Get<IZooContext>().AnimalsByUid.TryGetValue(uid, out var animal) ? animal : null;
         }
     }
 }
