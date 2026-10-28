@@ -52,7 +52,8 @@ namespace ZW.Logic.Systems.Spawns
 
         public void Tick(float deltaTime)
         {
-            var cooldown = _contextProvider.Get<IZooContext>().SpawnCooldown - deltaTime;
+            var zoo = _contextProvider.Get<IZooContext>();
+            var cooldown = zoo.SpawnCooldown - deltaTime;
             if (cooldown > 0f)
             {
                 _zooManager.SetSpawnCooldown(cooldown);
@@ -61,7 +62,10 @@ namespace ZW.Logic.Systems.Spawns
 
             var settings = _settingsRepository.Get<IZooSettingsEntity>();
             _zooManager.SetSpawnCooldown(_randomService.Range(settings.SpawnIntervalMin, settings.SpawnIntervalMax));
-            Spawn();
+            if (zoo.Animals.Count < settings.MaxAnimals)
+            {
+                Spawn();
+            }
         }
 
         private void Spawn()

@@ -14,6 +14,7 @@ namespace ZW.Logic.Services.Movements
     public class JumpMovementStrategy : IAnimalMovementStrategy
     {
         private const float MinHeight = 0.01f;
+        private const float MinGravity = 0.01f;
 
         private readonly Dictionary<string, IJumpMovementEntity> _configs;
         private readonly IRandomDirectionService _randomDirectionService;
@@ -47,8 +48,14 @@ namespace ZW.Logic.Services.Movements
                 : animal.KeepDirection ? animal.Direction
                 : _randomDirectionService.Next();
             var gravity = _environmentService.Gravity;
-            var verticalVelocity = (float)Math.Sqrt(2f * gravity * Math.Max(config.Height, MinHeight));
-            var airTime = 2f * verticalVelocity / gravity;
+            var verticalVelocity = 0f;
+            var airTime = 1f;
+            if (gravity > MinGravity)
+            {
+                verticalVelocity = (float)Math.Sqrt(2f * gravity * Math.Max(config.Height, MinHeight));
+                airTime = 2f * verticalVelocity / gravity;
+            }
+
             var motion = new AnimalMotion(direction.Scale(config.Distance / airTime), verticalVelocity);
 
             return new MovementDecision(direction, config.Interval, motion);

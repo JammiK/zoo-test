@@ -4,6 +4,7 @@ using ZW.Data.Generated.Entities.Movements;
 using ZW.Data.Interfaces.Entities.Animals;
 using ZW.Data.Interfaces.Entities.Movements;
 using ZW.Data.Models.Types;
+using ZW.Logic.Extensions;
 using ZW.Logic.Models.Movements;
 using ZW.Logic.Services.Movements;
 using ZW.Logic.Tests.Fakes;
@@ -71,6 +72,22 @@ namespace ZW.Logic.Tests.Movements
 
             Assert.AreEqual(back, decision.Direction);
             Assert.Less(decision.Motion.Value.Velocity.X, 0f);
+        }
+
+        [Test]
+        public void ZeroGravity_SlidesWithoutNaN()
+        {
+            var config = new JumpMovementEntity { Id = "jump", Animals = new[] { _frog }, Distance = 4f, Height = 1f, Interval = 2f };
+            var strategy = new JumpMovementStrategy(
+                new FakeEntityRepository<IJumpMovementEntity>(config),
+                _direction,
+                new FakeEnvironmentService { Gravity = 0f });
+
+            var motion = strategy.Decide(Model(_frog), Inside(0.1f)).Motion.Value;
+
+            Assert.IsFalse(float.IsNaN(motion.Velocity.X) || float.IsNaN(motion.Velocity.Z));
+            Assert.AreEqual(0f, motion.VerticalVelocity);
+            Assert.AreEqual(4f, motion.Velocity.Magnitude(), 1e-4f);
         }
 
         [Test]
