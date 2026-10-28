@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using JG.Data.Entities.Interfaces.Repositories.Common;
 using ZW.Data.Interfaces.Entities.Animals;
 using ZW.Data.Interfaces.Entities.Movements;
@@ -15,7 +15,7 @@ namespace ZW.Logic.Services.Movements
     {
         private const float MinHeight = 0.01f;
 
-        private readonly IEntityRepository<IJumpMovementEntity> _configRepository;
+        private readonly Dictionary<string, IJumpMovementEntity> _configs;
         private readonly IRandomDirectionService _randomDirectionService;
         private readonly IEnvironmentService _environmentService;
 
@@ -24,14 +24,14 @@ namespace ZW.Logic.Services.Movements
             IRandomDirectionService randomDirectionService,
             IEnvironmentService environmentService)
         {
-            _configRepository = configRepository;
+            _configs = configRepository.IndexByAnimal();
             _randomDirectionService = randomDirectionService;
             _environmentService = environmentService;
         }
 
         public bool CanMove(IAnimalEntity entity)
         {
-            return entity != null && GetConfig(entity) != null;
+            return entity != null && _configs.ContainsKey(entity.Id);
         }
 
         public MovementDecision Decide(IAnimalModel animal, MovementContext context)
@@ -42,7 +42,7 @@ namespace ZW.Logic.Services.Movements
                 return new MovementDecision(animal.Direction, cooldown, null);
             }
 
-            var config = GetConfig(animal.Entity);
+            var config = _configs[animal.Entity.Id];
             var direction = context.IsInsideArea ? _randomDirectionService.Next() : context.ReturnDirection;
             var gravity = _environmentService.Gravity;
             var verticalVelocity = (float)Math.Sqrt(2f * gravity * Math.Max(config.Height, MinHeight));
@@ -50,11 +50,6 @@ namespace ZW.Logic.Services.Movements
             var motion = new AnimalMotion(direction.Scale(config.Distance / airTime), verticalVelocity);
 
             return new MovementDecision(direction, config.Interval, motion);
-        }
-
-        private IJumpMovementEntity GetConfig(IAnimalEntity entity)
-        {
-            return _configRepository.GetFirst(config => config.Animals.Any(animal => animal.Id == entity.Id));
         }
     }
 }

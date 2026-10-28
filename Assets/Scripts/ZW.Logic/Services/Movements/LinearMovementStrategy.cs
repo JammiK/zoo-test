@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections.Generic;
 using JG.Data.Entities.Interfaces.Repositories.Common;
 using ZW.Data.Interfaces.Entities.Animals;
 using ZW.Data.Interfaces.Entities.Movements;
@@ -11,29 +11,24 @@ namespace ZW.Logic.Services.Movements
 {
     public class LinearMovementStrategy : IAnimalMovementStrategy
     {
-        private readonly IEntityRepository<ILinearMovementEntity> _configRepository;
+        private readonly Dictionary<string, ILinearMovementEntity> _configs;
 
         public LinearMovementStrategy(IEntityRepository<ILinearMovementEntity> configRepository)
         {
-            _configRepository = configRepository;
+            _configs = configRepository.IndexByAnimal();
         }
 
         public bool CanMove(IAnimalEntity entity)
         {
-            return entity != null && GetConfig(entity) != null;
+            return entity != null && _configs.ContainsKey(entity.Id);
         }
 
         public MovementDecision Decide(IAnimalModel animal, MovementContext context)
         {
-            var config = GetConfig(animal.Entity);
+            var config = _configs[animal.Entity.Id];
             var direction = context.IsInsideArea ? animal.Direction : context.ReturnDirection;
 
             return new MovementDecision(direction, 0f, new AnimalMotion(direction.Scale(config.Speed), 0f));
-        }
-
-        private ILinearMovementEntity GetConfig(IAnimalEntity entity)
-        {
-            return _configRepository.GetFirst(config => config.Animals.Any(animal => animal.Id == entity.Id));
         }
     }
 }

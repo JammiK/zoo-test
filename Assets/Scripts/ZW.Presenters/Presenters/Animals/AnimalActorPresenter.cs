@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Core.JG.Logic.Core.Interfaces.Systems.Core;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -124,7 +123,7 @@ namespace ZW.Presenters.Presenters.Animals
 
         private void SyncPositions()
         {
-            foreach (var (uid, actor) in _actorProvider.All.ToList())
+            foreach (var (uid, actor) in _actorProvider.All)
             {
                 _positionSyncSystem.Sync(uid, actor.Position.ToPlanar());
             }
