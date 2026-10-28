@@ -18,3 +18,4 @@ MonoBehaviour:
   _foodChain: {fileID: 11400000, guid: 2849670df22571e4b91965a705386ba9, type: 2}
   _strength: 1
   _spawnWeight: 1
+  _spawnRadius: 0.5
