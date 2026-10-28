@@ -6,6 +6,7 @@ namespace ZW.Views.Interfaces.Actors.Effects
     public interface ITastyLabelView : IPoolableView
     {
         void SetText(string text);
-        void SetAnchor(Vector3 position);
+        void SetAnchor(Vector3 groundPoint);
+        void SetAlpha(float alpha);
     }
 }

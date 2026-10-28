@@ -19,6 +19,7 @@ MonoBehaviour:
   _spawnIntervalMax: 2
   _screenPadding: 1
   _tastyLabelDuration: 1
+  _tastyLabelRiseDistance: 1.5
   _tastyLabelPrefab: {fileID: 8204402781228719411, guid: 7375d5edf2d6cba47b71acab8d91e49a, type: 3}
   _autosaveInterval: 5
   _maxAnimals: 60

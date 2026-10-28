@@ -11,6 +11,7 @@ namespace ZW.Data.Interfaces.Entities.Settings
         float SpawnIntervalMax { get; }
         float ScreenPadding { get; }
         float TastyLabelDuration { get; }
+        [DefaultValueSnippet("1.5f")] float TastyLabelRiseDistance { get; }
         [PrefabField] string TastyLabelPrefab { get; }
         [DefaultValueSnippet("5f")] float AutosaveInterval { get; }
         [DefaultValueSnippet("60")] int MaxAnimals { get; }

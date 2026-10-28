@@ -4,12 +4,13 @@ using Core.JG.Logic.Core.Interfaces.Systems.Core;
 using Cysharp.Threading.Tasks;
 using JG.Data.Entities.Interfaces.Repositories.Common;
 using UniRx;
+using UnityEngine;
 using ZW.Data.Interfaces.Entities.Settings;
-using ZW.Data.Interfaces.Models.Animals;
+using ZW.Data.Models.Types;
+using ZW.Logic.Interfaces.Services.Environment;
 using ZW.Logic.Interfaces.Streams.Animals;
-using ZW.Logic.Models.FoodChains;
+using ZW.Presenters.Extensions;
 using ZW.Presenters.Interfaces.Pools;
-using ZW.Presenters.Interfaces.Providers.Animals;
 using ZW.Views.Interfaces.Actors.Effects;
 using ZW.Views.Interfaces.Actors.World;
 
@@ -18,37 +19,35 @@ namespace ZW.Presenters.Presenters.Animals
     public class TastyLabelPresenter : IDisposable
     {
         private const string TastyText = "Tasty!";
+        private const float MinDuration = 0.01f;
+
+        // The camera looks straight down, so world +Z is "up" on screen.
+        private static readonly Vector3 ScreenUp = Vector3.forward;
 
         private readonly ISettingsRepository _settingsRepository;
-        private readonly IAnimalActorProvider _actorProvider;
         private readonly IViewPoolService _viewPoolService;
         private readonly IWorldContainerView _worldContainerView;
         private readonly IUpdateSystem _updateSystem;
+        private readonly IEnvironmentService _environmentService;
         private readonly IDisposable _eatenSubscription;
-        private readonly IDisposable _diedSubscription;
-        private readonly Dictionary<int, ITastyLabelView> _labels = new();
-        private readonly Dictionary<int, IDisposable> _hideTimers = new();
-        private readonly HashSet<int> _pending = new();
-        private readonly List<int> _followBuffer = new();
+        private readonly List<(ITastyLabelView View, Vector3 Origin, float Elapsed)> _labels = new();
 
         public TastyLabelPresenter(
             IAnimalEatenStream eatenStream,
-            IAnimalDiedStream diedStream,
-            IAnimalActorProvider actorProvider,
             ISettingsRepository settingsRepository,
             IViewPoolService viewPoolService,
             IWorldContainerView worldContainerView,
-            IUpdateSystem updateSystem)
+            IUpdateSystem updateSystem,
+            IEnvironmentService environmentService)
         {
-            _actorProvider = actorProvider;
             _settingsRepository = settingsRepository;
             _viewPoolService = viewPoolService;
             _worldContainerView = worldContainerView;
             _updateSystem = updateSystem;
+            _environmentService = environmentService;
 
-            _eatenSubscription = eatenStream.Subscribe(eaten => ShowAsync(eaten).Forget());
-            _diedSubscription = diedStream.Subscribe(OnDied);
-            _updateSystem.Add(FollowEaters);
+            _eatenSubscription = eatenStream.Subscribe(eaten => ShowAsync(eaten.Position).Forget());
+            _updateSystem.Add(Animate);
         }
 
         private IZooSettingsEntity Settings => _settingsRepository.Get<IZooSettingsEntity>();
@@ -56,107 +55,52 @@ namespace ZW.Presenters.Presenters.Animals
         public void Dispose()
         {
             _eatenSubscription.Dispose();
-            _diedSubscription.Dispose();
-            _updateSystem.Remove(FollowEaters);
-            foreach (var timer in _hideTimers.Values)
-            {
-                timer.Dispose();
-            }
+            _updateSystem.Remove(Animate);
+            _labels.Clear();
         }
 
-        private async UniTaskVoid ShowAsync(AnimalEaten eaten)
+        private async UniTaskVoid ShowAsync(PlanarVector position)
         {
-            var uid = eaten.Eater.Uid;
-            if (_pending.Contains(uid))
+            var label = await _viewPoolService.Get<ITastyLabelView>(
+                Settings.TastyLabelPrefab,
+                _worldContainerView.EffectsContainer,
+                _worldContainerView.LifetimeToken);
+            if (label == null)
             {
                 return;
             }
 
-            if (!_labels.TryGetValue(uid, out var label))
-            {
-                _pending.Add(uid);
-                try
-                {
-                    label = await _viewPoolService.Get<ITastyLabelView>(
-                        Settings.TastyLabelPrefab,
-                        _worldContainerView.EffectsContainer,
-                        _worldContainerView.LifetimeToken);
-                }
-                finally
-                {
-                    _pending.Remove(uid);
-                }
-
-                if (label == null)
-                {
-                    return;
-                }
-
-                if (!_actorProvider.TryGet(uid, out _))
-                {
-                    _viewPoolService.Release(Settings.TastyLabelPrefab, label);
-                    return;
-                }
-
-                label.SetText(TastyText);
-                _labels[uid] = label;
-            }
-
-            FollowEater(uid, label);
-            RestartHideTimer(uid);
+            var origin = position.ToWorld();
+            label.SetText(TastyText);
+            Apply(label, origin, 0f);
+            _labels.Add((label, origin, 0f));
         }
 
-        private void RestartHideTimer(int uid)
+        private void Animate()
         {
-            if (_hideTimers.Remove(uid, out var previous))
+            var duration = Mathf.Max(Settings.TastyLabelDuration, MinDuration);
+            var deltaTime = _environmentService.DeltaTime;
+            for (var i = _labels.Count - 1; i >= 0; i--)
             {
-                previous.Dispose();
-            }
+                var (view, origin, elapsed) = _labels[i];
+                elapsed += deltaTime;
+                if (elapsed >= duration)
+                {
+                    _labels.RemoveAt(i);
+                    _viewPoolService.Release(Settings.TastyLabelPrefab, view);
+                    continue;
+                }
 
-            _hideTimers[uid] = Observable.Timer(TimeSpan.FromSeconds(Settings.TastyLabelDuration)).Subscribe(_ => Hide(uid));
-        }
-
-        private void OnDied(IAnimalModel victim)
-        {
-            Hide(victim.Uid);
-        }
-
-        private void Hide(int uid)
-        {
-            if (_hideTimers.Remove(uid, out var timer))
-            {
-                timer.Dispose();
-            }
-
-            if (_labels.Remove(uid, out var label))
-            {
-                _viewPoolService.Release(Settings.TastyLabelPrefab, label);
+                _labels[i] = (view, origin, elapsed);
+                Apply(view, origin, elapsed / duration);
             }
         }
 
-        private void FollowEaters()
+        private void Apply(ITastyLabelView view, Vector3 origin, float progress)
         {
-            _followBuffer.Clear();
-            _followBuffer.AddRange(_labels.Keys);
-            foreach (var uid in _followBuffer)
-            {
-                if (_labels.TryGetValue(uid, out var label))
-                {
-                    FollowEater(uid, label);
-                }
-            }
-        }
-
-        private void FollowEater(int uid, ITastyLabelView label)
-        {
-            if (_actorProvider.TryGet(uid, out var actor))
-            {
-                label.SetAnchor(actor.RenderPosition);
-            }
-            else
-            {
-                Hide(uid);
-            }
+            var rise = 1f - (1f - progress) * (1f - progress);
+            view.SetAnchor(origin + ScreenUp * (Settings.TastyLabelRiseDistance * rise));
+            view.SetAlpha(1f - progress * progress);
         }
     }
 }
