@@ -27,13 +27,13 @@ namespace ZW.Logic.Systems.Zoo
             _environmentService = environmentService;
             _spawnSystem = spawnSystem;
             _movementSystem = movementSystem;
-            _startedSubscription = startedStream.Subscribe(_ => _updateSystem.Add(Tick));
+            _startedSubscription = startedStream.Subscribe(_ => _updateSystem.AddFixed(Tick));
         }
 
         public void Dispose()
         {
             _startedSubscription.Dispose();
-            _updateSystem.Remove(Tick);
+            _updateSystem.RemoveFixed(Tick);
         }
 
         private void Tick()
