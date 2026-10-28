@@ -39,6 +39,7 @@ namespace ZW.Logic.Systems.Movements
             if (direction.HasValue)
             {
                 _animalManager.SetDirection(animal, direction.Value);
+                _animalManager.SetKeepDirection(animal, true);
             }
         }
     }

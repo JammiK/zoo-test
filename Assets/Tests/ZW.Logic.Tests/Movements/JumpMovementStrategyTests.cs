@@ -73,6 +73,20 @@ namespace ZW.Logic.Tests.Movements
             Assert.Less(decision.Motion.Value.Velocity.X, 0f);
         }
 
+        [Test]
+        public void AfterObstacleBounce_JumpsAlongForcedDirection()
+        {
+            var bounced = new PlanarVector(0f, -1f);
+            var animal = Model(_frog);
+            animal.Direction = bounced;
+            animal.KeepDirection = true;
+            _direction.Direction = new PlanarVector(1f, 0f);
+
+            var decision = _strategy.Decide(animal, Inside(0.1f));
+
+            Assert.AreEqual(bounced, decision.Direction);
+        }
+
         private static MovementContext Inside(float deltaTime)
         {
             return new MovementContext(deltaTime, true, default);

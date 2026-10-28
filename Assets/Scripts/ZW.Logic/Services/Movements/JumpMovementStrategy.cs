@@ -43,7 +43,9 @@ namespace ZW.Logic.Services.Movements
             }
 
             var config = _configs[animal.Entity.Id];
-            var direction = context.IsInsideArea ? _randomDirectionService.Next() : context.ReturnDirection;
+            var direction = !context.IsInsideArea ? context.ReturnDirection
+                : animal.KeepDirection ? animal.Direction
+                : _randomDirectionService.Next();
             var gravity = _environmentService.Gravity;
             var verticalVelocity = (float)Math.Sqrt(2f * gravity * Math.Max(config.Height, MinHeight));
             var airTime = 2f * verticalVelocity / gravity;

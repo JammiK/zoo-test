@@ -87,6 +87,11 @@ namespace ZW.Logic.Systems.Movements
 
                 if (decision.Motion.HasValue)
                 {
+                    if (animal.KeepDirection)
+                    {
+                        _animalManager.SetKeepDirection(animal, false);
+                    }
+
                     _motionStream.OnNext(new AnimalMotionCommand(animal.Uid, decision.Motion.Value));
                 }
             }
