@@ -1,30 +1,32 @@
+using System;
 using ZW.Data.Models.Types;
 using ZW.Logic.Extensions;
 using ZW.Logic.Interfaces.Services.Levels;
-using ZW.Logic.Interfaces.Services.Movements;
 
 namespace ZW.Logic.Services.Levels
 {
     public class AreaReturnService : IAreaReturnService
     {
-        private readonly ILevelAreaService _levelAreaService;
-        private readonly IObstacleBounceService _bounceService;
+        private const float MaxDeviation = 30f * (float)Math.PI / 180f;
+        private static readonly float KeepCourseMinDot = (float)Math.Cos(60f * Math.PI / 180f);
 
-        public AreaReturnService(ILevelAreaService levelAreaService, IObstacleBounceService bounceService)
+        private readonly ILevelAreaService _levelAreaService;
+
+        public AreaReturnService(ILevelAreaService levelAreaService)
         {
             _levelAreaService = levelAreaService;
-            _bounceService = bounceService;
         }
 
         public PlanarVector GetReturnDirection(PlanarVector position, PlanarVector currentDirection, float roll)
         {
             var inward = _levelAreaService.InwardNormal(position);
-            if (currentDirection.Dot(inward) > 0f)
+            if (currentDirection.Normalized().Dot(inward) >= KeepCourseMinDot)
             {
                 return currentDirection;
             }
 
-            return _bounceService.GetDirectionAway(inward, roll) ?? inward;
+            var deviation = (Math.Clamp(roll, 0f, 1f) * 2f - 1f) * MaxDeviation;
+            return inward.Rotate(deviation);
         }
     }
 }
