@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 using ZW.Views.Interfaces.Actors.Animals;
 
@@ -13,8 +12,6 @@ namespace ZW.Views.Actors.Animals
 
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Animator _animator;
-        [SerializeField] private TMP_Text _label;
-        [SerializeField] private Vector3 _labelOffset = new(0f, 2.5f, -1f);
 
         private Action<IAnimalActor> _onCollided;
         private Action<Vector3> _onObstacleHit;
@@ -44,16 +41,6 @@ namespace ZW.Views.Actors.Animals
             }
         }
 
-        public void SetLabel(string text)
-        {
-            _label.text = text;
-        }
-
-        public void SetLabelVisible(bool visible)
-        {
-            _label.gameObject.SetActive(visible);
-        }
-
         public void SetCollisionListener(Action<IAnimalActor> onCollided)
         {
             _onCollided = onCollided;
@@ -64,9 +51,21 @@ namespace ZW.Views.Actors.Animals
             _onObstacleHit = onObstacleHit;
         }
 
-        public void SelfDestroy()
+        public void SetActive(bool active)
         {
-            Destroy(gameObject);
+            if (!active)
+            {
+                _onCollided = null;
+                _onObstacleHit = null;
+            }
+
+            gameObject.SetActive(active);
+
+            if (active)
+            {
+                _rigidbody.linearVelocity = Vector3.zero;
+                _rigidbody.angularVelocity = Vector3.zero;
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -78,11 +77,6 @@ namespace ZW.Views.Actors.Animals
             }
 
             _onObstacleHit?.Invoke(collision.GetContact(0).normal);
-        }
-
-        private void LateUpdate()
-        {
-            _label.transform.SetPositionAndRotation(transform.position + _labelOffset, Quaternion.Euler(90f, 0f, 0f));
         }
     }
 }

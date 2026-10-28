@@ -8,9 +8,11 @@ namespace ZW.Views.Actors.World
     {
         [SerializeField] private Transform _levelContainer;
         [SerializeField] private Transform _animalsContainer;
+        [SerializeField] private Transform _effectsContainer;
 
         public Transform LevelContainer => _levelContainer;
         public Transform AnimalsContainer => _animalsContainer;
+        public Transform EffectsContainer => _effectsContainer;
         public CancellationToken LifetimeToken => destroyCancellationToken;
     }
 }

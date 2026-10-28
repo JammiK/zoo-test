@@ -7,6 +7,7 @@ namespace ZW.Views.Interfaces.Actors.World
     {
         Transform LevelContainer { get; }
         Transform AnimalsContainer { get; }
+        Transform EffectsContainer { get; }
         CancellationToken LifetimeToken { get; }
     }
 }

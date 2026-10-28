@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7375d5edf2d6cba47b71acab8d91e49a
+    m_Address: Assets/Prefabs/Effects/TastyLabel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: abd43ffa66b9cd849869dcf5030564c2
     m_Address: Assets/Prefabs/Animals/Snake.prefab
     m_ReadOnly: 0
