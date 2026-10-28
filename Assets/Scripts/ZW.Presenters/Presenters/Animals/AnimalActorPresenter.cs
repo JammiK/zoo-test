@@ -1,8 +1,9 @@
-using System;
 using System.Collections.Generic;
+using System;
 using Core.JG.Logic.Core.Interfaces.Systems.Core;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
 using ZW.Data.Interfaces.Models.Animals;
 using ZW.Data.Interfaces.Providers.Animals;
 using ZW.Data.Interfaces.Types.Animals;
@@ -103,7 +104,7 @@ namespace ZW.Presenters.Presenters.Animals
             }
 
             actor.SetPosition(animal.Position.ToWorld(SpawnHeight));
-            actor.SetCollisionListener(other => OnCollided(animal.Uid, other));
+            actor.SetCollisionListener((other, point) => OnCollided(animal.Uid, other, point));
             actor.SetObstacleListener(normal => _obstacleSystem.HitObstacle(animal.Uid, normal.ToPlanar()));
             _actorProvider.Register(animal.Uid, actor);
         }
@@ -119,11 +120,11 @@ namespace ZW.Presenters.Presenters.Animals
             _viewPoolService.Release(animal.Entity.Prefab, actor);
         }
 
-        private void OnCollided(int uid, IAnimalActor other)
+        private void OnCollided(int uid, IAnimalActor other, Vector3 point)
         {
             if (_actorProvider.TryGetUid(other, out var otherUid))
             {
-                _collisionSystem.Collide(uid, otherUid);
+                _collisionSystem.Collide(uid, otherUid, point.ToPlanar());
             }
         }
 

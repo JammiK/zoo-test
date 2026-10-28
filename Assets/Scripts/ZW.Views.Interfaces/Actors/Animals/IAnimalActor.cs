@@ -7,7 +7,7 @@ namespace ZW.Views.Interfaces.Actors.Animals
 {
     public interface IAnimalActor : IPositionActor, IMotionActor, IPoolableView
     {
-        void SetCollisionListener(Action<IAnimalActor> onCollided);
+        void SetCollisionListener(Action<IAnimalActor, Vector3> onCollided);
         void SetObstacleListener(Action<Vector3> onObstacleHit);
     }
 }

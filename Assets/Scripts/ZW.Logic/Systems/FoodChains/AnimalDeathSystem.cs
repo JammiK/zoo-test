@@ -2,6 +2,7 @@ using ZW.Data.Interfaces.Managers.Animals;
 using ZW.Data.Interfaces.Managers.Stats;
 using ZW.Data.Interfaces.Managers.Zoo;
 using ZW.Data.Interfaces.Models.Animals;
+using ZW.Data.Models.Types;
 using ZW.Logic.Interfaces.Streams.Animals;
 using ZW.Logic.Interfaces.Systems.FoodChains;
 using ZW.Logic.Models.FoodChains;
@@ -30,13 +31,13 @@ namespace ZW.Logic.Systems.FoodChains
             _diedStream = diedStream;
         }
 
-        public void Eat(IAnimalModel eater, IAnimalModel victim)
+        public void Eat(IAnimalModel eater, IAnimalModel victim, PlanarVector position)
         {
             _animalManager.Kill(victim);
             _deathStatsManager.AddDeath(victim.Entity.FoodChain);
             _zooManager.RemoveAnimal(victim);
 
-            _eatenStream.OnNext(new AnimalEaten(eater, victim));
+            _eatenStream.OnNext(new AnimalEaten(eater, victim, position));
             _diedStream.OnNext(victim);
         }
     }
