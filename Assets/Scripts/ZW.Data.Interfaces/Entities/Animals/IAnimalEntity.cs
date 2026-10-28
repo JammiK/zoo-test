@@ -1,0 +1,14 @@
+using JG.Data.Entities.Interfaces.Attributes;
+using JG.Data.Entities.Interfaces.Entities.Common;
+using ZW.Data.Interfaces.Entities.FoodChains;
+
+namespace ZW.Data.Interfaces.Entities.Animals
+{
+    public interface IAnimalEntity : IEntity
+    {
+        [PrefabField] string Prefab { get; }
+        IFoodChainEntity FoodChain { get; }
+        int Strength { get; }
+        [DefaultValueSnippet("1f")] float SpawnWeight { get; }
+    }
+}
