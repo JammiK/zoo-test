@@ -33,13 +33,24 @@ namespace ZW.Logic.Tests.Levels
             Assert.AreEqual(expected, _service.IsInside(new PlanarVector(x, z)));
         }
 
-        [Test]
-        public void DirectionToCenter_IsNormalized()
+        [TestCase(9.5f, 0f, -1f, 0f)]
+        [TestCase(0f, -4.5f, 0f, 1f)]
+        [TestCase(0f, 0f, 0f, 0f)]
+        public void InwardNormal_PointsBackIntoArea(float x, float z, float expectedX, float expectedZ)
         {
-            var direction = _service.DirectionToCenter(new PlanarVector(5f, 0f));
+            var normal = _service.InwardNormal(new PlanarVector(x, z));
 
-            Assert.AreEqual(-1f, direction.X, 1e-5f);
-            Assert.AreEqual(0f, direction.Z, 1e-5f);
+            Assert.AreEqual(expectedX, normal.X, 1e-5f);
+            Assert.AreEqual(expectedZ, normal.Z, 1e-5f);
+        }
+
+        [Test]
+        public void InwardNormal_InCorner_IsDiagonal()
+        {
+            var normal = _service.InwardNormal(new PlanarVector(10f, 5f));
+
+            Assert.AreEqual(-0.7071f, normal.X, 1e-3f);
+            Assert.AreEqual(-0.7071f, normal.Z, 1e-3f);
         }
 
         [TestCase(0f)]

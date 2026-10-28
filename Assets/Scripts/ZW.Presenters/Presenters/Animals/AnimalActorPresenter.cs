@@ -26,6 +26,7 @@ namespace ZW.Presenters.Presenters.Animals
         private readonly IAnimalActorProvider _actorProvider;
         private readonly IAnimalPositionSyncSystem _positionSyncSystem;
         private readonly IAnimalCollisionSystem _collisionSystem;
+        private readonly IAnimalObstacleSystem _obstacleSystem;
         private readonly IUpdateSystem _updateSystem;
         private readonly IDisposable _spawnedSubscription;
         private readonly IDisposable _diedSubscription;
@@ -39,6 +40,7 @@ namespace ZW.Presenters.Presenters.Animals
             IAnimalActorProvider actorProvider,
             IAnimalPositionSyncSystem positionSyncSystem,
             IAnimalCollisionSystem collisionSystem,
+            IAnimalObstacleSystem obstacleSystem,
             IUpdateSystem updateSystem)
         {
             _instantiateSystem = instantiateSystem;
@@ -46,6 +48,7 @@ namespace ZW.Presenters.Presenters.Animals
             _actorProvider = actorProvider;
             _positionSyncSystem = positionSyncSystem;
             _collisionSystem = collisionSystem;
+            _obstacleSystem = obstacleSystem;
             _updateSystem = updateSystem;
 
             foreach (var animal in animalProvider.GetAlive())
@@ -86,6 +89,7 @@ namespace ZW.Presenters.Presenters.Animals
             actor.SetPosition(animal.Position.ToWorld(SpawnHeight));
             actor.SetLabelVisible(false);
             actor.SetCollisionListener(other => OnCollided(animal.Uid, other));
+            actor.SetObstacleListener(normal => _obstacleSystem.HitObstacle(animal.Uid, normal.ToPlanar()));
             _actorProvider.Register(animal.Uid, actor);
         }
 

@@ -25,9 +25,10 @@ namespace ZW.Logic.Services.Levels
             return Math.Abs(point.X) <= halfSize.X && Math.Abs(point.Z) <= halfSize.Z;
         }
 
-        public PlanarVector DirectionToCenter(PlanarVector point)
+        public PlanarVector InwardNormal(PlanarVector point)
         {
-            return default(PlanarVector).Subtract(point).Normalized();
+            var halfSize = GetHalfSize();
+            return new PlanarVector(InwardAxis(point.X, halfSize.X), InwardAxis(point.Z, halfSize.Z)).Normalized();
         }
 
         public PlanarVector RandomPoint()
@@ -36,6 +37,16 @@ namespace ZW.Logic.Services.Levels
             return new PlanarVector(
                 _randomService.Range(-halfSize.X, halfSize.X),
                 _randomService.Range(-halfSize.Z, halfSize.Z));
+        }
+
+        private static float InwardAxis(float value, float halfSize)
+        {
+            if (value > halfSize)
+            {
+                return -1f;
+            }
+
+            return value < -halfSize ? 1f : 0f;
         }
 
         private PlanarVector GetHalfSize()

@@ -13,6 +13,7 @@ namespace ZW.Views.Actors.Animals
         [SerializeField] private Vector3 _labelOffset = new(0f, 2.5f, -1f);
 
         private Action<IAnimalActor> _onCollided;
+        private Action<Vector3> _onObstacleHit;
 
         public Vector3 Position => _rigidbody.position;
 
@@ -48,6 +49,11 @@ namespace ZW.Views.Actors.Animals
             _onCollided = onCollided;
         }
 
+        public void SetObstacleListener(Action<Vector3> onObstacleHit)
+        {
+            _onObstacleHit = onObstacleHit;
+        }
+
         public void SelfDestroy()
         {
             Destroy(gameObject);
@@ -58,7 +64,10 @@ namespace ZW.Views.Actors.Animals
             if (collision.rigidbody != null && collision.rigidbody.TryGetComponent<IAnimalActor>(out var other))
             {
                 _onCollided?.Invoke(other);
+                return;
             }
+
+            _onObstacleHit?.Invoke(collision.GetContact(0).normal);
         }
 
         private void LateUpdate()
