@@ -1,4 +1,5 @@
 using JG.Core.Installers.Containers;
+using ZW.Presenters.Pools;
 using ZW.Presenters.Presenters.Animals;
 using ZW.Presenters.Presenters.Levels;
 using ZW.Presenters.Presenters.Lifecycle;
@@ -14,6 +15,8 @@ namespace ZW.Presenters.Containers
 
         static PresentersContainer()
         {
+            Container.SelfBind<ViewPoolFactory>();
+            Container.SelfBind<ViewPoolService>();
             Container.SelfBind<AnimalActorProvider>();
             Container.SelfBind<PhysicsSpawnPointValidator>();
 

@@ -11,7 +11,8 @@
         "JG.Data.Entities.Interfaces",
         "JG.Presenters.Core.Interfaces",
         "UniRx",
-        "JG.Views.UI.Core.Interfaces"
+        "JG.Views.UI.Core.Interfaces",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
