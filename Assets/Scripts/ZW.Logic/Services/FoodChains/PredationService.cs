@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using JG.Data.Entities.Interfaces.Repositories.Common;
 using ZW.Data.Interfaces.Entities.FoodChains;
 using ZW.Logic.Interfaces.Services.FoodChains;
@@ -7,11 +8,17 @@ namespace ZW.Logic.Services.FoodChains
 {
     public class PredationService : IPredationService
     {
-        private readonly IEntityRepository<IPredationRuleEntity> _ruleRepository;
+        private readonly HashSet<(string Predator, string Prey)> _rules = new();
 
         public PredationService(IEntityRepository<IPredationRuleEntity> ruleRepository)
         {
-            _ruleRepository = ruleRepository;
+            foreach (var rule in ruleRepository.GetAll())
+            {
+                if (rule.Predator != null && rule.Prey != null)
+                {
+                    _rules.Add((rule.Predator.Id, rule.Prey.Id));
+                }
+            }
         }
 
         public PredationOutcome Resolve(IFoodChainEntity first, IFoodChainEntity second)
@@ -34,7 +41,7 @@ namespace ZW.Logic.Services.FoodChains
 
         private bool CanEat(IFoodChainEntity predator, IFoodChainEntity prey)
         {
-            return _ruleRepository.GetFirst(rule => rule.Predator?.Id == predator.Id && rule.Prey?.Id == prey.Id) != null;
+            return predator != null && prey != null && _rules.Contains((predator.Id, prey.Id));
         }
     }
 }
