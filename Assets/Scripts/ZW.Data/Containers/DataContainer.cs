@@ -1,3 +1,4 @@
+using Core.JG.Data.Services;
 using JG.Core.Installers.Containers;
 using ZW.Data.Factories.Animals;
 using ZW.Data.Managers.Animals;
@@ -14,6 +15,8 @@ namespace ZW.Data.Containers
 
         static DataContainer()
         {
+            Container.SelfBind<RandomService>();
+
             Container.SelfBind<AnimalFactory>();
 
             Container.SelfBind<AnimalManager>();

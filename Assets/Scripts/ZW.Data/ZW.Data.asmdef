@@ -7,7 +7,9 @@
         "JG.Data.Entities.Interfaces",
         "JG.Data.Entities",
         "JG.DataManagers.Entities.Interfaces",
-        "JG.Core.Installers.Containers"
+        "JG.Core.Installers.Containers",
+        "JG.Data",
+        "JG.Data.Interfaces"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
