@@ -8,6 +8,11 @@ namespace Core.JG.Extensions.Editor.Extensions
     {
         public static string GetAddress(this Object value, string groupName = "Default")
         {
+            if (value == null)
+            {
+                return null;
+            }
+
             string path = AssetDatabase.GetAssetPath(value);
             string guid = AssetDatabase.AssetPathToGUID(path);
             var settings = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings;
