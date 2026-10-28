@@ -1,7 +1,11 @@
 {
     "name": "ZW.Logic.Models",
     "rootNamespace": "ZW.Logic.Models",
-    "references": [],
+    "references": [
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Data.Entities.Interfaces"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

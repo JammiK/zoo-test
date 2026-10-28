@@ -12,7 +12,8 @@
         "JG.Logic.Streams",
         "JG.Core.Installers.Containers",
         "UniRx",
-        "UniTask"
+        "UniTask",
+        "JG.Data.Interfaces"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -40,7 +40,7 @@ namespace JG.Logic.Entities.Systems.Saves
             locked_ = locked;
         }
 
-        void Save()
+        public void Save()
         {
             if (locked_)
             {

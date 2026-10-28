@@ -4,5 +4,6 @@ namespace JG.Data.Entities.Interfaces.Systems.Saves
     {
         void RequestSave();
         void SetLocked(bool locked);
+        void Save();
     }
 }
