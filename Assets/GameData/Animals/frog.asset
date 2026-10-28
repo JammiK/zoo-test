@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ZW.Data.Editor::ZW.Data.Editor.Generated.EditorEntities.Animals.AnimalEditorEntity
   _id: frog
   _disabled: 0
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 3147215231487705886, guid: 70b9b4cf9e0e9f44ebb36ec7fe6947b0, type: 3}
   _foodChain: {fileID: 11400000, guid: 2849670df22571e4b91965a705386ba9, type: 2}
   _strength: 1
   _spawnWeight: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ZW.Data.Editor::ZW.Data.Editor.Generated.EditorEntities.Animals.AnimalEditorEntity
   _id: snake
   _disabled: 0
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 355010091284206889, guid: abd43ffa66b9cd849869dcf5030564c2, type: 3}
   _foodChain: {fileID: 11400000, guid: 160a344eb4641204aa3ae7f99a4fbecb, type: 2}
   _strength: 1
   _spawnWeight: 1
