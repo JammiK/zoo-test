@@ -4,6 +4,7 @@ using ZW.Logic.Services.Levels;
 using ZW.Logic.Services.Movements;
 using ZW.Logic.Services.Spawns;
 using ZW.Logic.Streams.Animals;
+using ZW.Logic.Systems.Movements;
 using ZW.Logic.Systems.Spawns;
 
 namespace ZW.Logic.Containers
@@ -30,6 +31,8 @@ namespace ZW.Logic.Containers
         private static void InstallSystems()
         {
             Container.SelfBind<AnimalSpawnSystem>();
+            Container.SelfBind<AnimalMovementSystem>();
+            Container.SelfBind<AnimalPositionSyncSystem>();
         }
 
         private static void InstallServices()
@@ -38,6 +41,8 @@ namespace ZW.Logic.Containers
             Container.SelfBind<RandomDirectionService>();
             Container.SelfBind<LevelAreaService>();
             Container.SelfBind<AnimalSpawnPickService>();
+            Container.SelfBind<JumpMovementStrategy>();
+            Container.SelfBind<LinearMovementStrategy>();
         }
     }
 }
