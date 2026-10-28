@@ -37,6 +37,9 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Animals
         [SerializeField()]
         private float _spawnWeight = 1f;
         
+        [SerializeField()]
+        private float _spawnRadius = 0.5f;
+        
         public string Id
         {
             get
@@ -77,6 +80,14 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Animals
             }
         }
         
+        public float SpawnRadius
+        {
+            get
+            {
+                return this._spawnRadius;
+            }
+        }
+        
         public override ZW.Data.Interfaces.Entities.Animals.IAnimalEntity ToEntity()
         {
             var entity = new AnimalEntity();
@@ -85,6 +96,7 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Animals
             entity.FoodChain = this.FoodChain;
             entity.Strength = this.Strength;
             entity.SpawnWeight = this.SpawnWeight;
+            entity.SpawnRadius = this.SpawnRadius;
             return entity;
         }
     }

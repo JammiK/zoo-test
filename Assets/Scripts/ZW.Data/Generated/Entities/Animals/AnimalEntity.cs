@@ -28,6 +28,8 @@ namespace ZW.Data.Generated.Entities.Animals
         
         private float _spawnWeight;
         
+        private float _spawnRadius;
+        
         public string Id
         {
             get
@@ -85,6 +87,18 @@ namespace ZW.Data.Generated.Entities.Animals
             set
             {
                 this._spawnWeight = value;
+            }
+        }
+        
+        public float SpawnRadius
+        {
+            get
+            {
+                return this._spawnRadius;
+            }
+            set
+            {
+                this._spawnRadius = value;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Core.JG.Extensions.Editor.Extensions
             var assetEntry = settings.FindAssetEntry(guid);
             if (assetEntry == null)
             {
-                var group = settings.FindGroup(groupName) ?? settings.CreateGroup(groupName, false, false, false, null, null);
+                var group = settings.FindGroup(groupName) ?? settings.DefaultGroup;
                 assetEntry = settings.CreateOrMoveEntry(guid, group);
                 assetEntry.address = path;
                 EditorUtility.SetDirty(settings);

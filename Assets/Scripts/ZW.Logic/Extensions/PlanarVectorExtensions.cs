@@ -35,5 +35,17 @@ namespace ZW.Logic.Extensions
         {
             return new PlanarVector((float)Math.Cos(radians), (float)Math.Sin(radians));
         }
+
+        public static PlanarVector Rotate(this PlanarVector vector, float radians)
+        {
+            var cos = (float)Math.Cos(radians);
+            var sin = (float)Math.Sin(radians);
+            return new PlanarVector(vector.X * cos - vector.Z * sin, vector.X * sin + vector.Z * cos);
+        }
+
+        public static float Dot(this PlanarVector a, PlanarVector b)
+        {
+            return a.X * b.X + a.Z * b.Z;
+        }
     }
 }

@@ -14,7 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: 352b2ea572ab17e4e8a279e0c7a0b580
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 70b9b4cf9e0e9f44ebb36ec7fe6947b0
+    m_Address: Assets/Prefabs/Animals/Frog.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71fdae66870c9014a9cbd202f5ac3676
+    m_Address: Assets/Prefabs/Levels/Meadow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abd43ffa66b9cd849869dcf5030564c2
+    m_Address: Assets/Prefabs/Animals/Snake.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 64d7a93148a9e814e8a09eb8f054864d, type: 2}
   m_SchemaSet:

@@ -5,6 +5,5 @@ namespace ZW.Data.Interfaces.Entities.Movements
     public interface ILinearMovementEntity : IEntity, IAnimalMovementConfig
     {
         float Speed { get; }
-        float TurnInterval { get; }
     }
 }

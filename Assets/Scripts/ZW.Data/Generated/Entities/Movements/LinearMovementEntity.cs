@@ -24,8 +24,6 @@ namespace ZW.Data.Generated.Entities.Movements
         
         private float _speed;
         
-        private float _turnInterval;
-        
         public ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] Animals
         {
             get
@@ -59,18 +57,6 @@ namespace ZW.Data.Generated.Entities.Movements
             set
             {
                 this._speed = value;
-            }
-        }
-        
-        public float TurnInterval
-        {
-            get
-            {
-                return this._turnInterval;
-            }
-            set
-            {
-                this._turnInterval = value;
             }
         }
     }

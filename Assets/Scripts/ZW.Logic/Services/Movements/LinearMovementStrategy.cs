@@ -12,14 +12,10 @@ namespace ZW.Logic.Services.Movements
     public class LinearMovementStrategy : IAnimalMovementStrategy
     {
         private readonly IEntityRepository<ILinearMovementEntity> _configRepository;
-        private readonly IRandomDirectionService _randomDirectionService;
 
-        public LinearMovementStrategy(
-            IEntityRepository<ILinearMovementEntity> configRepository,
-            IRandomDirectionService randomDirectionService)
+        public LinearMovementStrategy(IEntityRepository<ILinearMovementEntity> configRepository)
         {
             _configRepository = configRepository;
-            _randomDirectionService = randomDirectionService;
         }
 
         public bool CanMove(IAnimalEntity entity)
@@ -30,20 +26,9 @@ namespace ZW.Logic.Services.Movements
         public MovementDecision Decide(IAnimalModel animal, MovementContext context)
         {
             var config = GetConfig(animal.Entity);
-            var direction = animal.Direction;
-            var cooldown = animal.MoveCooldown - context.DeltaTime;
+            var direction = context.IsInsideArea ? animal.Direction : context.ReturnDirection;
 
-            if (!context.IsInsideArea)
-            {
-                direction = context.ReturnDirection;
-            }
-            else if (cooldown <= 0f)
-            {
-                direction = _randomDirectionService.Next();
-                cooldown = config.TurnInterval;
-            }
-
-            return new MovementDecision(direction, cooldown, new AnimalMotion(direction.Scale(config.Speed), 0f));
+            return new MovementDecision(direction, 0f, new AnimalMotion(direction.Scale(config.Speed), 0f));
         }
 
         private ILinearMovementEntity GetConfig(IAnimalEntity entity)

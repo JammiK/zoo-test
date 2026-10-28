@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ZW.Data.Editor::ZW.Data.Editor.Generated.EditorEntities.Levels.LevelEditorEntity
   _id: meadow
   _disabled: 0
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 6496467326317498193, guid: 71fdae66870c9014a9cbd202f5ac3676, type: 3}
   _size:
     X: 24
     Z: 14

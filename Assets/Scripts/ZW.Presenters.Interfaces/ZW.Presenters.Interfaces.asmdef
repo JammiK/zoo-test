@@ -10,7 +10,8 @@
         "ZW.Views.Models",
         "JG.Data.Entities.Interfaces",
         "JG.Presenters.Core.Interfaces",
-        "UniRx"
+        "UniRx",
+        "JG.Views.UI.Core.Interfaces"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

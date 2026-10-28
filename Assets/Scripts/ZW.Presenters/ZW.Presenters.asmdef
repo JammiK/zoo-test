@@ -15,7 +15,10 @@
         "JG.Presenters.Core.Interfaces",
         "JG.Core.Installers.Containers",
         "UniRx",
-        "UniTask"
+        "UniTask",
+        "JG.Views.UI.Core.Interfaces",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

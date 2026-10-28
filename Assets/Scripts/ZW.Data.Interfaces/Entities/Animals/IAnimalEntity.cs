@@ -10,5 +10,6 @@ namespace ZW.Data.Interfaces.Entities.Animals
         IFoodChainEntity FoodChain { get; }
         int Strength { get; }
         [DefaultValueSnippet("1f")] float SpawnWeight { get; }
+        [DefaultValueSnippet("0.5f")] float SpawnRadius { get; }
     }
 }

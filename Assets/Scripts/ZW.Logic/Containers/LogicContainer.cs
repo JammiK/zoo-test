@@ -37,6 +37,7 @@ namespace ZW.Logic.Containers
             Container.SelfBind<AnimalSpawnSystem>();
             Container.SelfBind<AnimalMovementSystem>();
             Container.SelfBind<AnimalPositionSyncSystem>();
+            Container.SelfBind<AnimalObstacleSystem>();
             Container.SelfBind<AnimalCollisionSystem>();
             Container.SelfBind<AnimalDeathSystem>();
             Container.SelfBind<ZooSaveSystem>();
@@ -48,9 +49,12 @@ namespace ZW.Logic.Containers
             Container.SelfBind<EnvironmentService>();
             Container.SelfBind<RandomDirectionService>();
             Container.SelfBind<LevelAreaService>();
+            Container.SelfBind<AreaReturnService>();
             Container.SelfBind<AnimalSpawnPickService>();
+            Container.SelfBind<SpawnPointService>();
             Container.SelfBind<JumpMovementStrategy>();
             Container.SelfBind<LinearMovementStrategy>();
+            Container.SelfBind<ObstacleBounceService>();
             Container.SelfBind<PredationService>();
             Container.SelfBind<AnimalDuelService>();
         }

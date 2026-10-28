@@ -5,7 +5,7 @@ namespace ZW.Logic.Interfaces.Services.Levels
     public interface ILevelAreaService
     {
         bool IsInside(PlanarVector point);
-        PlanarVector DirectionToCenter(PlanarVector point);
+        PlanarVector InwardNormal(PlanarVector point);
         PlanarVector RandomPoint();
     }
 }
