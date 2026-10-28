@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using ZW.Data.Generated.Entities.Movements;
 using ZW.Data.Interfaces.Entities.Animals;
-using ZW.Data.Interfaces.Entities.Movements;
 using ZW.Data.Models.Types;
 using ZW.Logic.Models.Movements;
 using ZW.Logic.Services.Movements;
@@ -18,9 +17,8 @@ namespace ZW.Logic.Tests.Movements
         [SetUp]
         public void SetUp()
         {
-            _snake = Animal("snake", Predator);
-            var config = new LinearMovementEntity { Id = "linear", Animals = new[] { _snake }, Speed = 3f };
-            _strategy = new LinearMovementStrategy(new FakeEntityRepository<ILinearMovementEntity>(config));
+            _snake = Animal("snake", Predator, movement: new LinearMovementEntity { Id = "linear", Speed = 3f });
+            _strategy = new LinearMovementStrategy();
         }
 
         [Test]

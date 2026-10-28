@@ -2,7 +2,6 @@ using System;
 using NUnit.Framework;
 using ZW.Data.Generated.Entities.Movements;
 using ZW.Data.Interfaces.Entities.Animals;
-using ZW.Data.Interfaces.Entities.Movements;
 using ZW.Data.Models.Types;
 using ZW.Logic.Extensions;
 using ZW.Logic.Models.Movements;
@@ -23,20 +22,19 @@ namespace ZW.Logic.Tests.Movements
         [SetUp]
         public void SetUp()
         {
-            _frog = Animal("frog", Prey);
+            var config = new JumpMovementEntity { Id = "jump", Distance = 4f, Height = 1.25f, Interval = 2f };
+            _frog = Animal("frog", Prey, movement: config);
             _direction = new FakeRandomDirectionService();
-            var config = new JumpMovementEntity { Id = "jump", Animals = new[] { _frog }, Distance = 4f, Height = 1.25f, Interval = 2f };
-            _strategy = new JumpMovementStrategy(
-                new FakeEntityRepository<IJumpMovementEntity>(config),
-                _direction,
-                new FakeEnvironmentService { Gravity = Gravity });
+            _strategy = new JumpMovementStrategy(_direction, new FakeEnvironmentService { Gravity = Gravity });
         }
 
         [Test]
-        public void CanMove_OnlyLinkedAnimals()
+        public void CanMove_OnlyAnimalsWithJumpMovement()
         {
             Assert.IsTrue(_strategy.CanMove(_frog));
-            Assert.IsFalse(_strategy.CanMove(Animal("snake")));
+            Assert.IsFalse(_strategy.CanMove(Animal("snake", movement: new LinearMovementEntity { Id = "linear" })));
+            Assert.IsFalse(_strategy.CanMove(Animal("rock")));
+            Assert.IsFalse(_strategy.CanMove(null));
         }
 
         [Test]
@@ -77,13 +75,10 @@ namespace ZW.Logic.Tests.Movements
         [Test]
         public void ZeroGravity_SlidesWithoutNaN()
         {
-            var config = new JumpMovementEntity { Id = "jump", Animals = new[] { _frog }, Distance = 4f, Height = 1f, Interval = 2f };
-            var strategy = new JumpMovementStrategy(
-                new FakeEntityRepository<IJumpMovementEntity>(config),
-                _direction,
-                new FakeEnvironmentService { Gravity = 0f });
+            var frog = Animal("frog", Prey, movement: new JumpMovementEntity { Id = "jump", Distance = 4f, Height = 1f, Interval = 2f });
+            var strategy = new JumpMovementStrategy(_direction, new FakeEnvironmentService { Gravity = 0f });
 
-            var motion = strategy.Decide(Model(_frog), Inside(0.1f)).Motion.Value;
+            var motion = strategy.Decide(Model(frog), Inside(0.1f)).Motion.Value;
 
             Assert.IsFalse(float.IsNaN(motion.Velocity.X) || float.IsNaN(motion.Velocity.Z));
             Assert.AreEqual(0f, motion.VerticalVelocity);

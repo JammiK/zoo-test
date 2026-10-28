@@ -13,6 +13,7 @@ namespace ZW.Data.Generated.Entities.Animals
     using System;
     using ZW.Data.Interfaces.Entities.Animals;
     using ZW.Data.Interfaces.Entities.FoodChains;
+    using ZW.Data.Interfaces.Entities.Movements;
     
     
     public class AnimalEntity : ZW.Data.Interfaces.Entities.Animals.IAnimalEntity
@@ -23,6 +24,8 @@ namespace ZW.Data.Generated.Entities.Animals
         private string _prefab;
         
         private ZW.Data.Interfaces.Entities.FoodChains.IFoodChainEntity _foodChain;
+        
+        private ZW.Data.Interfaces.Entities.Movements.IMovementEntity _movement;
         
         private int _strength;
         
@@ -63,6 +66,18 @@ namespace ZW.Data.Generated.Entities.Animals
             set
             {
                 this._foodChain = value;
+            }
+        }
+        
+        public ZW.Data.Interfaces.Entities.Movements.IMovementEntity Movement
+        {
+            get
+            {
+                return this._movement;
+            }
+            set
+            {
+                this._movement = value;
             }
         }
         

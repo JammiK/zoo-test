@@ -1,8 +1,6 @@
-using JG.Data.Entities.Interfaces.Entities.Common;
-
 namespace ZW.Data.Interfaces.Entities.Movements
 {
-    public interface IJumpMovementEntity : IEntity, IAnimalMovementConfig
+    public interface IJumpMovementEntity : IMovementEntity
     {
         float Distance { get; }
         float Height { get; }

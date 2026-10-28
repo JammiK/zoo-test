@@ -1,8 +1,6 @@
-using JG.Data.Entities.Interfaces.Entities.Common;
-
 namespace ZW.Data.Interfaces.Entities.Movements
 {
-    public interface ILinearMovementEntity : IEntity, IAnimalMovementConfig
+    public interface ILinearMovementEntity : IMovementEntity
     {
         float Speed { get; }
     }
