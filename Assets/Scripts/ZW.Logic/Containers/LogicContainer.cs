@@ -7,7 +7,9 @@ using ZW.Logic.Services.Spawns;
 using ZW.Logic.Streams.Animals;
 using ZW.Logic.Systems.FoodChains;
 using ZW.Logic.Systems.Movements;
+using ZW.Logic.Systems.Saves;
 using ZW.Logic.Systems.Spawns;
+using ZW.Logic.Systems.Zoo;
 
 namespace ZW.Logic.Containers
 {
@@ -37,6 +39,8 @@ namespace ZW.Logic.Containers
             Container.SelfBind<AnimalPositionSyncSystem>();
             Container.SelfBind<AnimalCollisionSystem>();
             Container.SelfBind<AnimalDeathSystem>();
+            Container.SelfBind<ZooSaveSystem>();
+            Container.SelfBind<ZooTickSystem>();
         }
 
         private static void InstallServices()
