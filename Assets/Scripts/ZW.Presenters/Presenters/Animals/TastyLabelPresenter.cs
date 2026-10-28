@@ -75,11 +75,17 @@ namespace ZW.Presenters.Presenters.Animals
             if (!_labels.TryGetValue(uid, out var label))
             {
                 _pending.Add(uid);
-                label = await _viewPoolService.Get<ITastyLabelView>(
-                    Settings.TastyLabelPrefab,
-                    _worldContainerView.EffectsContainer,
-                    _worldContainerView.LifetimeToken);
-                _pending.Remove(uid);
+                try
+                {
+                    label = await _viewPoolService.Get<ITastyLabelView>(
+                        Settings.TastyLabelPrefab,
+                        _worldContainerView.EffectsContainer,
+                        _worldContainerView.LifetimeToken);
+                }
+                finally
+                {
+                    _pending.Remove(uid);
+                }
 
                 if (label == null)
                 {
@@ -145,7 +151,7 @@ namespace ZW.Presenters.Presenters.Animals
         {
             if (_actorProvider.TryGet(uid, out var actor))
             {
-                label.SetAnchor(actor.Position);
+                label.SetAnchor(actor.RenderPosition);
             }
             else
             {
