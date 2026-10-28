@@ -58,7 +58,8 @@ namespace JG.Data.Entities.Editor.Buttons
                 .SelectMany(it => it.GetTypes())
                 .Where(type => type != entityType)
                 .Where(type => entityType.IsAssignableFrom(type) && !editorEntityType.IsAssignableFrom(type))
-                .Where(type => type.IsInterface);
+                .Where(type => type.IsInterface)
+                .Where(type => !type.IsAbstractEntity());
             foreach (var entityInterface in entityInterfaces)
             {
                 var genericType = typeof(EditorEntityBase<>).MakeGenericType(entityInterface);

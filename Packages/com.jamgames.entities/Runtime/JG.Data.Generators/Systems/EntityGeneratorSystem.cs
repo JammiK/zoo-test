@@ -43,7 +43,8 @@ namespace JG.Data.Generators.Systems
             var editorEntityType = typeof(IEditorEntity<>);
             var entityInterfaces = _types.Where(type => type != entityType)
                 .Where(type => entityType.IsAssignableFrom(type) && !editorEntityType.IsAssignableFrom(type))
-                .Where(type => type.IsInterface);
+                .Where(type => type.IsInterface)
+                .Where(type => !type.IsAbstractEntity());
             
             foreach (var entityInterface in entityInterfaces)
             {
@@ -250,6 +251,21 @@ namespace JG.Data.Generators.Systems
                 {
                     ProcessProperty<AudioClip>(propertyInfo, codeNamespace, field, property, fieldName, "?.GetAddress()");
                 }
+                else if (propertyInfo.PropertyType.IsAbstractEntity())
+                {
+                    AddEntityTypeFilter(codeNamespace, field, propertyInfo.PropertyType);
+                    field.Type = new CodeTypeReference(typeof(SimpleEditorEntityBase));
+                    property.GetStatements.Add(new CodeMethodReturnStatement(new CodeSnippetExpression(
+                        $"{fieldName} != null ? ({propertyInfo.PropertyType.Name}){fieldName}.ToEntityObject() : null")));
+                }
+                else if (propertyInfo.PropertyType.IsArray && propertyInfo.PropertyType.GetElementType().IsAbstractEntity())
+                {
+                    var elementType = propertyInfo.PropertyType.GetElementType();
+                    AddEntityTypeFilter(codeNamespace, field, elementType);
+                    field.Type = new CodeTypeReference(typeof(SimpleEditorEntityBase[]));
+                    property.GetStatements.Add(new CodeMethodReturnStatement(new CodeSnippetExpression(
+                        $"{fieldName}?.Where(f => f != null).Select(f => ({elementType.Name})f.ToEntityObject()).ToArray() ?? Array.Empty<{elementType.Name}>()")));
+                }
                 else if (propertyInfo.PropertyType.IsArray && propertyInfo.PropertyType.GetElementType().ToString().Split('.').Last().Contains("Entity"))
                 {
                     var (customEditorEntityPath, customEditorClassName) = GeneratorService.GetPath(propertyInfo.PropertyType.GetElementType(), $".Interfaces{Path.DirectorySeparatorChar}Entities", $".Editor{Path.DirectorySeparatorChar}EditorEntities", "{0}EditorEntity", "Entity");
@@ -409,6 +425,13 @@ namespace JG.Data.Generators.Systems
             codeNamespace.Types.Add(targetClass);
             targetUnit.Namespaces.Add(codeNamespace);
             CodeGenExtensions.WriteSourceFile($"{pureEntityPath}.cs", new CSharpCodeProvider(), targetUnit);
+        }
+
+        static void AddEntityTypeFilter(CodeNamespace codeNamespace, CodeMemberField field, Type entityType)
+        {
+            codeNamespace.Imports.Add(new CodeNamespaceImport(entityType.Namespace));
+            field.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(EntityTypeFilterAttribute).Replace("Attribute", ""),
+                new CodeAttributeArgument(new CodeTypeOfExpression(entityType.Name))));
         }
 
         void ProcessProperty<T>(PropertyInfo propertyInfo, CodeNamespace codeNamespace, CodeMemberField field, CodeMemberProperty property, string fieldName, string fieldConvert)

@@ -18,6 +18,7 @@ namespace JG.Data.Entities.Editor.Common
         }
         public bool Disabled => _disabled;
         public abstract T ToEntity();
+        public override object ToEntityObject() => ToEntity();
 
 
 #if UNITY_EDITOR

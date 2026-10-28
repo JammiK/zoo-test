@@ -24,6 +24,7 @@ namespace JG.Data.Entities.Providers.GameData
                 .Where(type => type != entityType)
                 .Where(type => entityType.IsAssignableFrom(type) && !typeof(IEditorEntity<>).IsAssignableFrom(type))
                 .Where(type => type.IsInterface)
+                .Where(type => !type.IsAbstractEntity())
                 .ToArray();
             
             foreach (var entityInterface in entityInterfaces)
