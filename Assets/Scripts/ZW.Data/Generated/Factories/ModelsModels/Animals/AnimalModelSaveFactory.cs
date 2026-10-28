@@ -48,6 +48,7 @@ namespace ZW.Data.Generated.Factories.ModelsModels.Animals
             saveModel.Position = model.Position;
             saveModel.Direction = model.Direction;
             saveModel.MoveCooldown = model.MoveCooldown;
+            saveModel.KeepDirection = model.KeepDirection;
             return saveModel;
         }
         
@@ -61,6 +62,7 @@ namespace ZW.Data.Generated.Factories.ModelsModels.Animals
             model.Position = saveModel.Position;
             model.Direction = saveModel.Direction;
             model.MoveCooldown = saveModel.MoveCooldown;
+            model.KeepDirection = saveModel.KeepDirection;
             return model;
         }
     }

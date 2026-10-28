@@ -46,6 +46,7 @@ namespace ZW.Data.Generated.Factories.ContextsContexts
         {
             var context = new ZooContext();
             context.Animals = new List<ZW.Data.Interfaces.Models.Animals.IAnimalModel>();
+            context.AnimalsByUid = new Dictionary<System.Int32, ZW.Data.Interfaces.Models.Animals.IAnimalModel>();
             return context;
         }
         
