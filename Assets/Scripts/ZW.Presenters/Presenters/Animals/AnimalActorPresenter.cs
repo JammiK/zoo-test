@@ -87,7 +87,6 @@ namespace ZW.Presenters.Presenters.Animals
             }
 
             actor.SetPosition(animal.Position.ToWorld(SpawnHeight));
-            actor.SetLabelVisible(false);
             actor.SetCollisionListener(other => OnCollided(animal.Uid, other));
             actor.SetObstacleListener(normal => _obstacleSystem.HitObstacle(animal.Uid, normal.ToPlanar()));
             _actorProvider.Register(animal.Uid, actor);
