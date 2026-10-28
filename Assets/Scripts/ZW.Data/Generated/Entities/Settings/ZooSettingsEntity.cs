@@ -12,12 +12,15 @@ namespace ZW.Data.Generated.Entities.Settings
 {
     using System;
     using ZW.Data.Interfaces.Entities.Settings;
+    using ZW.Data.Interfaces.Entities.Levels;
     
     
     public class ZooSettingsEntity : ZW.Data.Interfaces.Entities.Settings.IZooSettingsEntity
     {
         
         private string _id;
+        
+        private ZW.Data.Interfaces.Entities.Levels.ILevelEntity _level;
         
         private float _spawnIntervalMin;
         
@@ -36,6 +39,18 @@ namespace ZW.Data.Generated.Entities.Settings
             set
             {
                 this._id = value;
+            }
+        }
+        
+        public ZW.Data.Interfaces.Entities.Levels.ILevelEntity Level
+        {
+            get
+            {
+                return this._level;
+            }
+            set
+            {
+                this._level = value;
             }
         }
         

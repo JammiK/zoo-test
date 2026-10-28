@@ -17,11 +17,16 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
     using UnityEngine;
     using Core.JG.Extensions.Editor.Extensions;
     using ZW.Data.Generated.Entities.Settings;
+    using ZW.Data.Interfaces.Entities.Levels;
+    using ZW.Data.Editor.Generated.EditorEntities.Levels;
     
     
     [CreateAssetMenu(fileName = "zoosettings.", menuName = "ZW/Settings/ZooSettings", order = 1)]
     public class ZooSettingsEditorEntity : EditorEntityBase<IZooSettingsEntity>, ZW.Data.Interfaces.Entities.Settings.IZooSettingsEntity
     {
+        
+        [SerializeField()]
+        private LevelEditorEntity _level;
         
         [SerializeField()]
         private float _spawnIntervalMin;
@@ -40,6 +45,14 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
             get
             {
                 return this._id;
+            }
+        }
+        
+        public ZW.Data.Interfaces.Entities.Levels.ILevelEntity Level
+        {
+            get
+            {
+                return this._level?.ToEntity();
             }
         }
         
@@ -79,6 +92,7 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
         {
             var entity = new ZooSettingsEntity();
             entity.Id = this.Id;
+            entity.Level = this.Level;
             entity.SpawnIntervalMin = this.SpawnIntervalMin;
             entity.SpawnIntervalMax = this.SpawnIntervalMax;
             entity.ScreenPadding = this.ScreenPadding;
