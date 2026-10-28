@@ -1,7 +1,10 @@
 using JG.Core.Installers.Containers;
 using ZW.Logic.Services.Environment;
+using ZW.Logic.Services.Levels;
 using ZW.Logic.Services.Movements;
+using ZW.Logic.Services.Spawns;
 using ZW.Logic.Streams.Animals;
+using ZW.Logic.Systems.Spawns;
 
 namespace ZW.Logic.Containers
 {
@@ -12,6 +15,7 @@ namespace ZW.Logic.Containers
         static LogicContainer()
         {
             InstallStreams();
+            InstallSystems();
             InstallServices();
         }
 
@@ -23,10 +27,17 @@ namespace ZW.Logic.Containers
             Container.SelfBind<AnimalDiedStream>();
         }
 
+        private static void InstallSystems()
+        {
+            Container.SelfBind<AnimalSpawnSystem>();
+        }
+
         private static void InstallServices()
         {
             Container.SelfBind<EnvironmentService>();
             Container.SelfBind<RandomDirectionService>();
+            Container.SelfBind<LevelAreaService>();
+            Container.SelfBind<AnimalSpawnPickService>();
         }
     }
 }
