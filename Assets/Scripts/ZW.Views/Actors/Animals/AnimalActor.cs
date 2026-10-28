@@ -10,6 +10,7 @@ namespace ZW.Views.Actors.Animals
     {
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private TMP_Text _label;
+        [SerializeField] private Vector3 _labelOffset = new(0f, 2.5f, -1f);
 
         private Action<IAnimalActor> _onCollided;
 
@@ -62,7 +63,7 @@ namespace ZW.Views.Actors.Animals
 
         private void LateUpdate()
         {
-            _label.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            _label.transform.SetPositionAndRotation(transform.position + _labelOffset, Quaternion.Euler(90f, 0f, 0f));
         }
     }
 }
