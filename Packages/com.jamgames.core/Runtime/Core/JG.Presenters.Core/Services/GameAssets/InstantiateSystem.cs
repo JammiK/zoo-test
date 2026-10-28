@@ -145,6 +145,13 @@ namespace Core.JG.Presenters.Core.Services.GameAssets
                 };
                 throw;
             }
+            catch (Exception exception)
+            {
+                Debug.LogError($"Unable to instantiate '{prefabAddress}': {exception.Message}");
+                if (handle.IsValid())
+                    Addressables.Release(handle);
+                return default;
+            }
 
             if (handle.Status != AsyncOperationStatus.Succeeded || gameObject == null)
             {

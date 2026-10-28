@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Core.JG.Logic.Core.Interfaces.Systems.Core;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -9,6 +10,7 @@ using ZW.Logic.Interfaces.Streams.Animals;
 using ZW.Logic.Interfaces.Streams.Zoo;
 using ZW.Logic.Interfaces.Systems.FoodChains;
 using ZW.Logic.Interfaces.Systems.Movements;
+using ZW.Logic.Interfaces.Systems.Zoo;
 using ZW.Presenters.Extensions;
 using ZW.Presenters.Interfaces.Pools;
 using ZW.Presenters.Interfaces.Providers.Animals;
@@ -27,6 +29,7 @@ namespace ZW.Presenters.Presenters.Animals
         private readonly IAnimalPositionSyncSystem _positionSyncSystem;
         private readonly IAnimalCollisionSystem _collisionSystem;
         private readonly IAnimalObstacleSystem _obstacleSystem;
+        private readonly IAnimalDiscardSystem _discardSystem;
         private readonly IUpdateSystem _updateSystem;
         private readonly IDisposable _spawnedSubscription;
         private readonly IDisposable _diedSubscription;
@@ -43,6 +46,7 @@ namespace ZW.Presenters.Presenters.Animals
             IAnimalPositionSyncSystem positionSyncSystem,
             IAnimalCollisionSystem collisionSystem,
             IAnimalObstacleSystem obstacleSystem,
+            IAnimalDiscardSystem discardSystem,
             IUpdateSystem updateSystem)
         {
             _viewPoolService = viewPoolService;
@@ -51,6 +55,7 @@ namespace ZW.Presenters.Presenters.Animals
             _positionSyncSystem = positionSyncSystem;
             _collisionSystem = collisionSystem;
             _obstacleSystem = obstacleSystem;
+            _discardSystem = discardSystem;
             _updateSystem = updateSystem;
 
             _startedSubscription = startedStream.Subscribe(_ => SpawnRestored(animalProvider));
@@ -69,7 +74,7 @@ namespace ZW.Presenters.Presenters.Animals
 
         private void SpawnRestored(IAnimalProvider animalProvider)
         {
-            foreach (var animal in animalProvider.GetAlive())
+            foreach (var animal in new List<IAnimalModel>(animalProvider.GetAlive()))
             {
                 if (!_actorProvider.TryGet(animal.Uid, out _))
                 {
@@ -87,6 +92,7 @@ namespace ZW.Presenters.Presenters.Animals
 
             if (actor == null)
             {
+                _discardSystem.Discard(animal.Uid);
                 return;
             }
 

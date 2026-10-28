@@ -43,6 +43,7 @@ namespace ZW.Logic.Containers
             Container.SelfBind<AnimalCollisionSystem>();
             Container.SelfBind<AnimalDeathSystem>();
             Container.SelfBind<ZooStartSystem>();
+            Container.SelfBind<AnimalDiscardSystem>();
             Container.SelfBind<ZooSaveSystem>();
             Container.SelfBind<ZooTickSystem>();
         }
