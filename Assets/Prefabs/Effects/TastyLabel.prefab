@@ -195,4 +195,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: ZW.Views::ZW.Views.Actors.Effects.TastyLabelView
   _text: {fileID: 9168282210942616217}
-  _offset: {x: 0, y: 2.5, z: -1}
+  _height: 2.5

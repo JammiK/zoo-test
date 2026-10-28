@@ -41,6 +41,9 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
         private float _tastyLabelDuration;
         
         [SerializeField()]
+        private float _tastyLabelRiseDistance = 1.5f;
+        
+        [SerializeField()]
         private UnityEngine.GameObject _tastyLabelPrefab;
         
         [SerializeField()]
@@ -97,6 +100,14 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
             }
         }
         
+        public float TastyLabelRiseDistance
+        {
+            get
+            {
+                return this._tastyLabelRiseDistance;
+            }
+        }
+        
         public string TastyLabelPrefab
         {
             get
@@ -130,6 +141,7 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
             entity.SpawnIntervalMax = this.SpawnIntervalMax;
             entity.ScreenPadding = this.ScreenPadding;
             entity.TastyLabelDuration = this.TastyLabelDuration;
+            entity.TastyLabelRiseDistance = this.TastyLabelRiseDistance;
             entity.TastyLabelPrefab = this.TastyLabelPrefab;
             entity.AutosaveInterval = this.AutosaveInterval;
             entity.MaxAnimals = this.MaxAnimals;

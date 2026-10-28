@@ -13,7 +13,7 @@ namespace ZW.Views.Actors.Animals
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Animator _animator;
 
-        private Action<IAnimalActor> _onCollided;
+        private Action<IAnimalActor, Vector3> _onCollided;
         private Action<Vector3> _onObstacleHit;
 
         public Vector3 Position => _rigidbody.position;
@@ -47,7 +47,7 @@ namespace ZW.Views.Actors.Animals
             }
         }
 
-        public void SetCollisionListener(Action<IAnimalActor> onCollided)
+        public void SetCollisionListener(Action<IAnimalActor, Vector3> onCollided)
         {
             _onCollided = onCollided;
         }
@@ -78,7 +78,7 @@ namespace ZW.Views.Actors.Animals
         {
             if (collision.rigidbody != null && collision.rigidbody.TryGetComponent<IAnimalActor>(out var other))
             {
-                _onCollided?.Invoke(other);
+                _onCollided?.Invoke(other, collision.GetContact(0).point);
                 return;
             }
 
