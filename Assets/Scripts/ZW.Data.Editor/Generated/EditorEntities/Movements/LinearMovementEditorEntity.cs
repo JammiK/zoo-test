@@ -17,8 +17,6 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
     using UnityEngine;
     using Core.JG.Extensions.Editor.Extensions;
     using ZW.Data.Generated.Entities.Movements;
-    using ZW.Data.Interfaces.Entities.Animals;
-    using ZW.Data.Editor.Generated.EditorEntities.Animals;
     
     
     [CreateAssetMenu(fileName = "linearmovement.", menuName = "ZW/LinearMovement", order = 1)]
@@ -26,18 +24,7 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
     {
         
         [SerializeField()]
-        private AnimalEditorEntity[] _animals;
-        
-        [SerializeField()]
         private float _speed;
-        
-        public ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] Animals
-        {
-            get
-            {
-                return this._animals?.Where(f => f != null).Select(f => f.ToEntity()).ToArray() ?? Array.Empty<AnimalEditorEntity>();
-            }
-        }
         
         public string Id
         {
@@ -58,7 +45,6 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
         public override ZW.Data.Interfaces.Entities.Movements.ILinearMovementEntity ToEntity()
         {
             var entity = new LinearMovementEntity();
-            entity.Animals = this.Animals;
             entity.Id = this.Id;
             entity.Speed = this.Speed;
             return entity;

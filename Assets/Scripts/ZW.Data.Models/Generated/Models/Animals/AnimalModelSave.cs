@@ -29,5 +29,7 @@ namespace ZW.Data.Models.Generated.Models.Animals
         public ZW.Data.Models.Types.PlanarVector Direction;
         
         public float MoveCooldown;
+        
+        public bool KeepDirection;
     }
 }

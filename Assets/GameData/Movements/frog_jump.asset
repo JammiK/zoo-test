@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: ZW.Data.Editor::ZW.Data.Editor.Generated.EditorEntities.Movements.JumpMovementEditorEntity
   _id: frog_jump
   _disabled: 0
-  _animals:
-  - {fileID: 11400000, guid: 7d3a85397631b3c49bc36a36227e74da, type: 2}
   _distance: 2
   _height: 0.5
   _interval: 1

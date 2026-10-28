@@ -32,6 +32,10 @@ namespace ZW.Data.Generated.Entities.Settings
         
         private string _tastyLabelPrefab;
         
+        private float _autosaveInterval;
+        
+        private int _maxAnimals;
+        
         public string Id
         {
             get
@@ -113,6 +117,30 @@ namespace ZW.Data.Generated.Entities.Settings
             set
             {
                 this._tastyLabelPrefab = value;
+            }
+        }
+        
+        public float AutosaveInterval
+        {
+            get
+            {
+                return this._autosaveInterval;
+            }
+            set
+            {
+                this._autosaveInterval = value;
+            }
+        }
+        
+        public int MaxAnimals
+        {
+            get
+            {
+                return this._maxAnimals;
+            }
+            set
+            {
+                this._maxAnimals = value;
             }
         }
     }

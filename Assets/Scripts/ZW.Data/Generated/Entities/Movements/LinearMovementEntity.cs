@@ -12,29 +12,14 @@ namespace ZW.Data.Generated.Entities.Movements
 {
     using System;
     using ZW.Data.Interfaces.Entities.Movements;
-    using ZW.Data.Interfaces.Entities.Animals;
     
     
     public class LinearMovementEntity : ZW.Data.Interfaces.Entities.Movements.ILinearMovementEntity
     {
         
-        private ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] _animals;
-        
         private string _id;
         
         private float _speed;
-        
-        public ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] Animals
-        {
-            get
-            {
-                return this._animals;
-            }
-            set
-            {
-                this._animals = value;
-            }
-        }
         
         public string Id
         {

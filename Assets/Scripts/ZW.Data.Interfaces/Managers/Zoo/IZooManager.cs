@@ -7,6 +7,7 @@ namespace ZW.Data.Interfaces.Managers.Zoo
         int TakeNextUid();
         void AddAnimal(IAnimalModel animal);
         void RemoveAnimal(IAnimalModel animal);
+        int RestoreIndex();
         void SetSpawnCooldown(float cooldown);
     }
 }

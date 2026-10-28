@@ -23,6 +23,11 @@ namespace ZW.Data.Managers.Animals
             animal.MoveCooldown = Math.Max(0f, cooldown);
         }
 
+        public void SetKeepDirection(IAnimalModel animal, bool keep)
+        {
+            animal.KeepDirection = keep;
+        }
+
         public void Kill(IAnimalModel animal)
         {
             animal.State = AnimalState.Dead;

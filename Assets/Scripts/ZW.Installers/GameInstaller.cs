@@ -2,6 +2,7 @@ using Core.JG.Installers.Core;
 using Core.JG.Logic.Core.Interfaces.Systems.Core;
 using Core.JG.Logic.Core.Systems.Core;
 using JG.Core.Installers;
+using JG.Core.Installers.Containers;
 using JG.Installers.Entities;
 using Zenject;
 using ZW.Data.Containers;
@@ -13,10 +14,14 @@ namespace ZW.Installers
 {
     public class GameInstaller : MonoInstaller
     {
+        private static readonly string[] EntityAssemblyPrefixes = { "ZW", "JG" };
+
         public override void InstallBindings()
         {
-            EntityRegistrator.Bind(DataContainer.Container, new[] { "ZW", "JG" });
+            var entityBindings = new DiContainerConfig();
+            EntityRegistrator.Bind(entityBindings, EntityAssemblyPrefixes);
 
+            Container.BindConfig(entityBindings);
             Container.BindConfig(JgEntitiesInstaller.Config);
             Container.BindConfig(JgCoreInstaller.Config);
             Container.BindConfig(DataContainer.Container);

@@ -32,6 +32,8 @@ namespace ZW.Data.Generated.Models.Animals
         
         private float _moveCooldown;
         
+        private bool _keepDirection;
+        
         public int Uid
         {
             get
@@ -101,6 +103,18 @@ namespace ZW.Data.Generated.Models.Animals
             set
             {
                 this._moveCooldown = value;
+            }
+        }
+        
+        public bool KeepDirection
+        {
+            get
+            {
+                return this._keepDirection;
+            }
+            set
+            {
+                this._keepDirection = value;
             }
         }
     }

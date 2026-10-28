@@ -12,6 +12,7 @@ namespace JG.Data.Entities.Providers.GameData
     public class GameDataProvider : IGameDataProvider
     {
         Dictionary<Type, object> _dictionary = new Dictionary<Type, object>();
+        readonly Dictionary<Type, object> _settings = new Dictionary<Type, object>();
         
         const string EntityName = "IEntity";
         public GameDataProvider(IGameDataLoadService gameDataLoadService)
@@ -23,6 +24,7 @@ namespace JG.Data.Entities.Providers.GameData
                 .Where(type => type != entityType)
                 .Where(type => entityType.IsAssignableFrom(type) && !typeof(IEditorEntity<>).IsAssignableFrom(type))
                 .Where(type => type.IsInterface)
+                .Where(type => !type.IsAbstractEntity())
                 .ToArray();
             
             foreach (var entityInterface in entityInterfaces)
@@ -89,6 +91,11 @@ namespace JG.Data.Entities.Providers.GameData
 
         public T GetSettings<T>() where T : IEntity
         {
+            if (_settings.TryGetValue(typeof(T), out var cached))
+            {
+                return (T)cached;
+            }
+
             if (!_dictionary.TryGetValue(typeof(T), out var abstractObj))
             {
                 throw new Exception($"Unable to find Entity Map for {typeof(T)}");
@@ -96,7 +103,9 @@ namespace JG.Data.Entities.Providers.GameData
 
             if (abstractObj is IDictionary<string, T> entityMap)
             {
-                return entityMap.Values.ElementAt(0);
+                var settings = entityMap.Values.ElementAt(0);
+                _settings[typeof(T)] = settings;
+                return settings;
             }
             
             throw new Exception($"Unable to cast Entity Map for {typeof(T)}");

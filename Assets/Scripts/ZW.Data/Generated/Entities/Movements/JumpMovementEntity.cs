@@ -12,13 +12,10 @@ namespace ZW.Data.Generated.Entities.Movements
 {
     using System;
     using ZW.Data.Interfaces.Entities.Movements;
-    using ZW.Data.Interfaces.Entities.Animals;
     
     
     public class JumpMovementEntity : ZW.Data.Interfaces.Entities.Movements.IJumpMovementEntity
     {
-        
-        private ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] _animals;
         
         private string _id;
         
@@ -27,18 +24,6 @@ namespace ZW.Data.Generated.Entities.Movements
         private float _height;
         
         private float _interval;
-        
-        public ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] Animals
-        {
-            get
-            {
-                return this._animals;
-            }
-            set
-            {
-                this._animals = value;
-            }
-        }
         
         public string Id
         {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Core.JG.Logic.Core.Interfaces.Systems.Core;
 using Cysharp.Threading.Tasks;
 using JG.Data.Entities.Interfaces.Repositories.Common;
@@ -30,6 +29,7 @@ namespace ZW.Presenters.Presenters.Animals
         private readonly Dictionary<int, ITastyLabelView> _labels = new();
         private readonly Dictionary<int, IDisposable> _hideTimers = new();
         private readonly HashSet<int> _pending = new();
+        private readonly List<int> _followBuffer = new();
 
         public TastyLabelPresenter(
             IAnimalEatenStream eatenStream,
@@ -75,11 +75,17 @@ namespace ZW.Presenters.Presenters.Animals
             if (!_labels.TryGetValue(uid, out var label))
             {
                 _pending.Add(uid);
-                label = await _viewPoolService.Get<ITastyLabelView>(
-                    Settings.TastyLabelPrefab,
-                    _worldContainerView.EffectsContainer,
-                    _worldContainerView.LifetimeToken);
-                _pending.Remove(uid);
+                try
+                {
+                    label = await _viewPoolService.Get<ITastyLabelView>(
+                        Settings.TastyLabelPrefab,
+                        _worldContainerView.EffectsContainer,
+                        _worldContainerView.LifetimeToken);
+                }
+                finally
+                {
+                    _pending.Remove(uid);
+                }
 
                 if (label == null)
                 {
@@ -130,9 +136,14 @@ namespace ZW.Presenters.Presenters.Animals
 
         private void FollowEaters()
         {
-            foreach (var (uid, label) in _labels.ToList())
+            _followBuffer.Clear();
+            _followBuffer.AddRange(_labels.Keys);
+            foreach (var uid in _followBuffer)
             {
-                FollowEater(uid, label);
+                if (_labels.TryGetValue(uid, out var label))
+                {
+                    FollowEater(uid, label);
+                }
             }
         }
 
@@ -140,7 +151,7 @@ namespace ZW.Presenters.Presenters.Animals
         {
             if (_actorProvider.TryGet(uid, out var actor))
             {
-                label.SetAnchor(actor.Position);
+                label.SetAnchor(actor.RenderPosition);
             }
             else
             {

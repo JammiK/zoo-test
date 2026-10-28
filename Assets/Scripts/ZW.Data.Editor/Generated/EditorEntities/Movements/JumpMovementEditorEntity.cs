@@ -17,16 +17,11 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
     using UnityEngine;
     using Core.JG.Extensions.Editor.Extensions;
     using ZW.Data.Generated.Entities.Movements;
-    using ZW.Data.Interfaces.Entities.Animals;
-    using ZW.Data.Editor.Generated.EditorEntities.Animals;
     
     
     [CreateAssetMenu(fileName = "jumpmovement.", menuName = "ZW/JumpMovement", order = 1)]
     public class JumpMovementEditorEntity : EditorEntityBase<IJumpMovementEntity>, ZW.Data.Interfaces.Entities.Movements.IJumpMovementEntity
     {
-        
-        [SerializeField()]
-        private AnimalEditorEntity[] _animals;
         
         [SerializeField()]
         private float _distance;
@@ -36,14 +31,6 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
         
         [SerializeField()]
         private float _interval;
-        
-        public ZW.Data.Interfaces.Entities.Animals.IAnimalEntity[] Animals
-        {
-            get
-            {
-                return this._animals?.Where(f => f != null).Select(f => f.ToEntity()).ToArray() ?? Array.Empty<AnimalEditorEntity>();
-            }
-        }
         
         public string Id
         {
@@ -80,7 +67,6 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Movements
         public override ZW.Data.Interfaces.Entities.Movements.IJumpMovementEntity ToEntity()
         {
             var entity = new JumpMovementEntity();
-            entity.Animals = this.Animals;
             entity.Id = this.Id;
             entity.Distance = this.Distance;
             entity.Height = this.Height;

@@ -14,94 +14,83 @@ namespace Core.JG.Logic.Core.Systems.Core
 
         public void Add(Action onUpdate)
         {
-            if (onUpdate == null)
-                return;
-
-            if (_handlers.Contains(onUpdate))
-                return;
-            
-            _handlers.Add(onUpdate);
+            AddHandler(_handlers, _handlersToRemove, onUpdate);
         }
 
         public void AddFixed(Action onFixedUpdate)
         {
-            if (onFixedUpdate == null)
-                return;
-
-            if (_fixedHandlersToRemove.Contains(onFixedUpdate))
-                _fixedHandlersToRemove.Remove(onFixedUpdate);
-            
-            _fixedHandlers.Add(onFixedUpdate);
+            AddHandler(_fixedHandlers, _fixedHandlersToRemove, onFixedUpdate);
         }
 
         public void Remove(Action onUpdate)
         {
-            if (onUpdate == null)
-                return;
-
-            if (!_handlersToRemove.Contains(onUpdate))
-                _handlersToRemove.Add(onUpdate);
+            RemoveHandler(_handlersToRemove, onUpdate);
         }
 
         public void RemoveFixed(Action onFixedUpdate)
         {
-            if (onFixedUpdate == null)
+            RemoveHandler(_fixedHandlersToRemove, onFixedUpdate);
+        }
+
+        static void AddHandler(List<Action> handlers, List<Action> handlersToRemove, Action handler)
+        {
+            if (handler == null)
                 return;
 
-            if (!_fixedHandlersToRemove.Contains(onFixedUpdate))
-                _fixedHandlersToRemove.Add(onFixedUpdate);
+            handlersToRemove.Remove(handler);
+
+            if (!handlers.Contains(handler))
+                handlers.Add(handler);
         }
 
-        void TryClearHandlers()
+        static void RemoveHandler(List<Action> handlersToRemove, Action handler)
         {
-            TryClearHandlers(_handlers, _handlersToRemove);
+            if (handler != null && !handlersToRemove.Contains(handler))
+                handlersToRemove.Add(handler);
         }
 
-        void TryClearFixedHandlers()
+        static void ApplyRemovals(List<Action> handlers, List<Action> handlersToRemove)
         {
-            TryClearHandlers(_fixedHandlers, _fixedHandlersToRemove);
-        }
-
-        void TryClearHandlers(List<Action> handlers, List<Action> handlersToRemove)
-        {
-            if (handlersToRemove.Count == 0)
-                return;
-
             for (int i = 0; i < handlersToRemove.Count; i++)
             {
-                Action handlerToRemove = handlersToRemove[i];
-                for (int index = handlers.Count - 1; index >= 0; index--)
+                handlers.Remove(handlersToRemove[i]);
+            }
+
+            handlersToRemove.Clear();
+        }
+
+        static void Invoke(List<Action> handlers, List<Action> handlersToRemove)
+        {
+            ApplyRemovals(handlers, handlersToRemove);
+
+            for (int i = handlers.Count - 1; i >= 0; i--)
+            {
+                if (i >= handlers.Count)
+                    continue;
+
+                var handler = handlers[i];
+                if (handlersToRemove.Contains(handler))
+                    continue;
+
+                try
                 {
-                    Action handler = handlers[index];
-                    if (handler == handlerToRemove)
-                    {
-                        handlers.Remove(handler);
-                        break;
-                    }
+                    handler();
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception);
                 }
             }
         }
-        
+
         void Update()
         {
-            TryClearHandlers();
-
-            for (int i = _handlers.Count - 1; i >= 0; i--)
-            {
-                var handler = _handlers[i];
-                handler();
-            }
+            Invoke(_handlers, _handlersToRemove);
         }
-        
+
         void FixedUpdate()
         {
-            TryClearFixedHandlers();
-
-            for (int i = _fixedHandlers.Count - 1; i >= 0; i--)
-            {
-                var handler = _fixedHandlers[i];
-                handler();
-            }
+            Invoke(_fixedHandlers, _fixedHandlersToRemove);
         }
     }
 }

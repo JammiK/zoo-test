@@ -19,6 +19,7 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Animals
     using ZW.Data.Generated.Entities.Animals;
     using ZW.Data.Interfaces.Entities.FoodChains;
     using ZW.Data.Editor.Generated.EditorEntities.FoodChains;
+    using ZW.Data.Interfaces.Entities.Movements;
     
     
     [CreateAssetMenu(fileName = "animal.", menuName = "ZW/Animal", order = 1)]
@@ -30,6 +31,10 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Animals
         
         [SerializeField()]
         private FoodChainEditorEntity _foodChain;
+        
+        [EntityTypeFilter(typeof(IMovementEntity))]
+        [SerializeField()]
+        private JG.Data.Entities.Editor.Common.SimpleEditorEntityBase _movement;
         
         [SerializeField()]
         private int _strength;
@@ -64,6 +69,14 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Animals
             }
         }
         
+        public ZW.Data.Interfaces.Entities.Movements.IMovementEntity Movement
+        {
+            get
+            {
+                return _movement != null ? (IMovementEntity)_movement.ToEntityObject() : null;
+            }
+        }
+        
         public int Strength
         {
             get
@@ -94,6 +107,7 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Animals
             entity.Id = this.Id;
             entity.Prefab = this.Prefab;
             entity.FoodChain = this.FoodChain;
+            entity.Movement = this.Movement;
             entity.Strength = this.Strength;
             entity.SpawnWeight = this.SpawnWeight;
             entity.SpawnRadius = this.SpawnRadius;

@@ -17,6 +17,7 @@ namespace ZW.Views.Actors.Animals
         private Action<Vector3> _onObstacleHit;
 
         public Vector3 Position => _rigidbody.position;
+        public Vector3 RenderPosition => transform.position;
 
         public void SetPosition(Vector3 position)
         {
@@ -32,6 +33,11 @@ namespace ZW.Views.Actors.Animals
             if (horizontalVelocity.sqrMagnitude > 0f)
             {
                 _rigidbody.MoveRotation(Quaternion.LookRotation(horizontalVelocity.normalized, Vector3.up));
+            }
+
+            if (_animator == null)
+            {
+                return;
             }
 
             _animator.SetFloat(SpeedHash, horizontalVelocity.magnitude);

@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using Core.JG.Logic.Core.Interfaces.Systems.Core;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -7,8 +7,10 @@ using ZW.Data.Interfaces.Models.Animals;
 using ZW.Data.Interfaces.Providers.Animals;
 using ZW.Data.Interfaces.Types.Animals;
 using ZW.Logic.Interfaces.Streams.Animals;
+using ZW.Logic.Interfaces.Streams.Zoo;
 using ZW.Logic.Interfaces.Systems.FoodChains;
 using ZW.Logic.Interfaces.Systems.Movements;
+using ZW.Logic.Interfaces.Systems.Zoo;
 using ZW.Presenters.Extensions;
 using ZW.Presenters.Interfaces.Pools;
 using ZW.Presenters.Interfaces.Providers.Animals;
@@ -27,20 +29,24 @@ namespace ZW.Presenters.Presenters.Animals
         private readonly IAnimalPositionSyncSystem _positionSyncSystem;
         private readonly IAnimalCollisionSystem _collisionSystem;
         private readonly IAnimalObstacleSystem _obstacleSystem;
+        private readonly IAnimalDiscardSystem _discardSystem;
         private readonly IUpdateSystem _updateSystem;
         private readonly IDisposable _spawnedSubscription;
         private readonly IDisposable _diedSubscription;
+        private readonly IDisposable _startedSubscription;
 
         public AnimalActorPresenter(
             IAnimalProvider animalProvider,
             IAnimalSpawnedStream spawnedStream,
             IAnimalDiedStream diedStream,
+            IZooStartedStream startedStream,
             IViewPoolService viewPoolService,
             IWorldContainerView worldContainerView,
             IAnimalActorProvider actorProvider,
             IAnimalPositionSyncSystem positionSyncSystem,
             IAnimalCollisionSystem collisionSystem,
             IAnimalObstacleSystem obstacleSystem,
+            IAnimalDiscardSystem discardSystem,
             IUpdateSystem updateSystem)
         {
             _viewPoolService = viewPoolService;
@@ -49,13 +55,10 @@ namespace ZW.Presenters.Presenters.Animals
             _positionSyncSystem = positionSyncSystem;
             _collisionSystem = collisionSystem;
             _obstacleSystem = obstacleSystem;
+            _discardSystem = discardSystem;
             _updateSystem = updateSystem;
 
-            foreach (var animal in animalProvider.GetAlive())
-            {
-                SpawnAsync(animal).Forget();
-            }
-
+            _startedSubscription = startedStream.Subscribe(_ => SpawnRestored(animalProvider));
             _spawnedSubscription = spawnedStream.Subscribe(animal => SpawnAsync(animal).Forget());
             _diedSubscription = diedStream.Subscribe(Despawn);
             _updateSystem.AddFixed(SyncPositions);
@@ -65,7 +68,19 @@ namespace ZW.Presenters.Presenters.Animals
         {
             _spawnedSubscription.Dispose();
             _diedSubscription.Dispose();
+            _startedSubscription.Dispose();
             _updateSystem.RemoveFixed(SyncPositions);
+        }
+
+        private void SpawnRestored(IAnimalProvider animalProvider)
+        {
+            foreach (var animal in new List<IAnimalModel>(animalProvider.GetAlive()))
+            {
+                if (!_actorProvider.TryGet(animal.Uid, out _))
+                {
+                    SpawnAsync(animal).Forget();
+                }
+            }
         }
 
         private async UniTaskVoid SpawnAsync(IAnimalModel animal)
@@ -77,6 +92,7 @@ namespace ZW.Presenters.Presenters.Animals
 
             if (actor == null)
             {
+                _discardSystem.Discard(animal.Uid);
                 return;
             }
 
@@ -113,7 +129,7 @@ namespace ZW.Presenters.Presenters.Animals
 
         private void SyncPositions()
         {
-            foreach (var (uid, actor) in _actorProvider.All.ToList())
+            foreach (var (uid, actor) in _actorProvider.All)
             {
                 _positionSyncSystem.Sync(uid, actor.Position.ToPlanar());
             }

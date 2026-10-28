@@ -2,6 +2,7 @@
 using System.Linq;
 using JG.Core.Installers.Containers;
 using JG.Data.Entities.Factories;
+using JG.Data.Entities.Interfaces.Attributes;
 using JG.Data.Entities.Interfaces.Entities.Common;
 using JG.Data.Entities.Interfaces.Factories.Contexts.Common;
 using JG.Data.Entities.Interfaces.Factories.Models.Common;
@@ -28,7 +29,8 @@ namespace JG.Installers.Entities
                 .SelectMany(a => a.GetTypes())
                 .Where(type => type != entityType)
                 .Where(type => entityType.IsAssignableFrom(type) && !editorEntityType.IsAssignableFrom(type))
-                .Where(type => type.IsInterface);
+                .Where(type => type.IsInterface)
+                .Where(type => !type.IsAbstractEntity());
 
             foreach (var entityInterface in entityInterfaces)
             {

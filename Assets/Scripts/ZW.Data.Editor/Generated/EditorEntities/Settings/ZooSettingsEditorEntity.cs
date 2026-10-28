@@ -43,6 +43,12 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
         [SerializeField()]
         private UnityEngine.GameObject _tastyLabelPrefab;
         
+        [SerializeField()]
+        private float _autosaveInterval = 5f;
+        
+        [SerializeField()]
+        private int _maxAnimals = 60;
+        
         public string Id
         {
             get
@@ -99,6 +105,22 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
             }
         }
         
+        public float AutosaveInterval
+        {
+            get
+            {
+                return this._autosaveInterval;
+            }
+        }
+        
+        public int MaxAnimals
+        {
+            get
+            {
+                return this._maxAnimals;
+            }
+        }
+        
         public override ZW.Data.Interfaces.Entities.Settings.IZooSettingsEntity ToEntity()
         {
             var entity = new ZooSettingsEntity();
@@ -109,6 +131,8 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
             entity.ScreenPadding = this.ScreenPadding;
             entity.TastyLabelDuration = this.TastyLabelDuration;
             entity.TastyLabelPrefab = this.TastyLabelPrefab;
+            entity.AutosaveInterval = this.AutosaveInterval;
+            entity.MaxAnimals = this.MaxAnimals;
             return entity;
         }
     }

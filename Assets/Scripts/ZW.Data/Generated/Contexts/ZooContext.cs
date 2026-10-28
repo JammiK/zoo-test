@@ -24,6 +24,8 @@ namespace ZW.Data.Generated.Contexts
         
         private float _spawnCooldown;
         
+        private System.Collections.Generic.Dictionary<int, ZW.Data.Interfaces.Models.Animals.IAnimalModel> _animalsByUid;
+        
         public System.Collections.Generic.List<ZW.Data.Interfaces.Models.Animals.IAnimalModel> Animals
         {
             get
@@ -57,6 +59,18 @@ namespace ZW.Data.Generated.Contexts
             set
             {
                 this._spawnCooldown = value;
+            }
+        }
+        
+        public System.Collections.Generic.Dictionary<int, ZW.Data.Interfaces.Models.Animals.IAnimalModel> AnimalsByUid
+        {
+            get
+            {
+                return this._animalsByUid;
+            }
+            set
+            {
+                this._animalsByUid = value;
             }
         }
     }

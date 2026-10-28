@@ -6,7 +6,8 @@ using Core.JG.Views.UI.Core.Interfaces.Common;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
-using UnityEngine.AddressableAssets; 
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
 namespace Core.JG.Presenters.Core.Services.GameAssets
@@ -129,15 +130,45 @@ namespace Core.JG.Presenters.Core.Services.GameAssets
 
         public async UniTask<T> Instantiate<T>(string prefabAddress, Transform container, CancellationToken cancellationToken)
         {
-            var gameObject = await Addressables.InstantiateAsync(prefabAddress, container).WithCancellation(cancellationToken);
+            var handle = Addressables.InstantiateAsync(prefabAddress, container);
+            GameObject gameObject;
+            try
+            {
+                gameObject = await handle.WithCancellation(cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                handle.Completed += completed =>
+                {
+                    if (completed.Status == AsyncOperationStatus.Succeeded)
+                        Addressables.ReleaseInstance(completed.Result);
+                };
+                throw;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError($"Unable to instantiate '{prefabAddress}': {exception.Message}");
+                if (handle.IsValid())
+                    Addressables.Release(handle);
+                return default;
+            }
+
+            if (handle.Status != AsyncOperationStatus.Succeeded || gameObject == null)
+            {
+                Debug.LogError($"Unable to instantiate '{prefabAddress}': {handle.OperationException?.Message}");
+                if (handle.IsValid())
+                    Addressables.Release(handle);
+                return default;
+            }
+
             var component = gameObject.GetComponent<T>();
             if (component == null)
             {
-                Debug.LogError($"Unable to GetComponent<{nameof(T)}> in {gameObject.name}");
-                Object.Destroy(gameObject);
+                Debug.LogError($"Unable to GetComponent<{typeof(T).Name}> in {gameObject.name}");
+                Addressables.ReleaseInstance(gameObject);
                 return default;
             }
-            
+
             _instantiateCallback.OnNext(gameObject);
             return component;
         }

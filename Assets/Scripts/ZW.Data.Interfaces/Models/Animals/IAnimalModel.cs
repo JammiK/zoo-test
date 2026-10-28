@@ -13,5 +13,6 @@ namespace ZW.Data.Interfaces.Models.Animals
         PlanarVector Position { get; set; }
         PlanarVector Direction { get; set; }
         float MoveCooldown { get; set; }
+        bool KeepDirection { get; set; }
     }
 }
