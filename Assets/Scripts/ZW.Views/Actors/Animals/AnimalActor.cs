@@ -35,6 +35,11 @@ namespace ZW.Views.Actors.Animals
                 _rigidbody.MoveRotation(Quaternion.LookRotation(horizontalVelocity.normalized, Vector3.up));
             }
 
+            if (_animator == null)
+            {
+                return;
+            }
+
             _animator.SetFloat(SpeedHash, horizontalVelocity.magnitude);
             if (verticalVelocity > 0f)
             {

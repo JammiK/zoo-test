@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Core.JG.Data.Interfaces.Services;
 using JG.Data.Entities.Interfaces.Repositories.Common;
 using UnityEngine;
 using ZW.Data.Interfaces.Entities.Animals;
 using ZW.Data.Interfaces.Managers.Animals;
+using ZW.Data.Interfaces.Models.Animals;
 using ZW.Data.Interfaces.Providers.Animals;
 using ZW.Data.Interfaces.Types.Animals;
 using ZW.Logic.Interfaces.Services.Levels;
@@ -75,25 +77,37 @@ namespace ZW.Logic.Systems.Movements
                     continue;
                 }
 
-                var isInside = _levelAreaService.IsInside(animal.Position);
-                var returnDirection = isInside
-                    ? animal.Direction
-                    : _areaReturnService.GetReturnDirection(animal.Position, animal.Direction, _randomService.NextFloat());
-                var context = new MovementContext(deltaTime, isInside, returnDirection);
-
-                var decision = strategy.Decide(animal, context);
-                _animalManager.SetDirection(animal, decision.Direction);
-                _animalManager.SetMoveCooldown(animal, decision.Cooldown);
-
-                if (decision.Motion.HasValue)
+                try
                 {
-                    if (animal.KeepDirection)
-                    {
-                        _animalManager.SetKeepDirection(animal, false);
-                    }
-
-                    _motionStream.OnNext(new AnimalMotionCommand(animal.Uid, decision.Motion.Value));
+                    Move(animal, strategy, deltaTime);
                 }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception);
+                }
+            }
+        }
+
+        private void Move(IAnimalModel animal, IAnimalMovementStrategy strategy, float deltaTime)
+        {
+            var isInside = _levelAreaService.IsInside(animal.Position);
+            var returnDirection = isInside
+                ? animal.Direction
+                : _areaReturnService.GetReturnDirection(animal.Position, animal.Direction, _randomService.NextFloat());
+            var context = new MovementContext(deltaTime, isInside, returnDirection);
+
+            var decision = strategy.Decide(animal, context);
+            _animalManager.SetDirection(animal, decision.Direction);
+            _animalManager.SetMoveCooldown(animal, decision.Cooldown);
+
+            if (decision.Motion.HasValue)
+            {
+                if (animal.KeepDirection)
+                {
+                    _animalManager.SetKeepDirection(animal, false);
+                }
+
+                _motionStream.OnNext(new AnimalMotionCommand(animal.Uid, decision.Motion.Value));
             }
         }
     }
