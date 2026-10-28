@@ -30,6 +30,8 @@ namespace ZW.Data.Generated.Entities.Settings
         
         private float _tastyLabelDuration;
         
+        private string _tastyLabelPrefab;
+        
         public string Id
         {
             get
@@ -99,6 +101,18 @@ namespace ZW.Data.Generated.Entities.Settings
             set
             {
                 this._tastyLabelDuration = value;
+            }
+        }
+        
+        public string TastyLabelPrefab
+        {
+            get
+            {
+                return this._tastyLabelPrefab;
+            }
+            set
+            {
+                this._tastyLabelPrefab = value;
             }
         }
     }

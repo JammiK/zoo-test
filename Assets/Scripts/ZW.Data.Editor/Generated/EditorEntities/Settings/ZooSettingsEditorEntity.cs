@@ -40,6 +40,9 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
         [SerializeField()]
         private float _tastyLabelDuration;
         
+        [SerializeField()]
+        private UnityEngine.GameObject _tastyLabelPrefab;
+        
         public string Id
         {
             get
@@ -88,6 +91,14 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
             }
         }
         
+        public string TastyLabelPrefab
+        {
+            get
+            {
+                return this._tastyLabelPrefab?.GetAddress();
+            }
+        }
+        
         public override ZW.Data.Interfaces.Entities.Settings.IZooSettingsEntity ToEntity()
         {
             var entity = new ZooSettingsEntity();
@@ -97,6 +108,7 @@ namespace ZW.Data.Editor.Generated.EditorEntities.Settings
             entity.SpawnIntervalMax = this.SpawnIntervalMax;
             entity.ScreenPadding = this.ScreenPadding;
             entity.TastyLabelDuration = this.TastyLabelDuration;
+            entity.TastyLabelPrefab = this.TastyLabelPrefab;
             return entity;
         }
     }
