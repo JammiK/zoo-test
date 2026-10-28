@@ -64,9 +64,21 @@ namespace ZW.Views.Actors.Animals
             _onObstacleHit = onObstacleHit;
         }
 
-        public void SelfDestroy()
+        public void SetActive(bool active)
         {
-            Destroy(gameObject);
+            if (!active)
+            {
+                _onCollided = null;
+                _onObstacleHit = null;
+            }
+
+            gameObject.SetActive(active);
+
+            if (active)
+            {
+                _rigidbody.linearVelocity = Vector3.zero;
+                _rigidbody.angularVelocity = Vector3.zero;
+            }
         }
 
         private void OnCollisionEnter(Collision collision)

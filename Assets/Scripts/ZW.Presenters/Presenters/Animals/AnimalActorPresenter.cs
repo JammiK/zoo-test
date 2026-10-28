@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Core.JG.Logic.Core.Interfaces.Systems.Core;
-using Core.JG.Presenters.Core.Interfaces.GameAssets;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using ZW.Data.Interfaces.Models.Animals;
@@ -11,6 +10,7 @@ using ZW.Logic.Interfaces.Streams.Animals;
 using ZW.Logic.Interfaces.Systems.FoodChains;
 using ZW.Logic.Interfaces.Systems.Movements;
 using ZW.Presenters.Extensions;
+using ZW.Presenters.Interfaces.Pools;
 using ZW.Presenters.Interfaces.Providers.Animals;
 using ZW.Views.Interfaces.Actors.Animals;
 using ZW.Views.Interfaces.Actors.World;
@@ -21,7 +21,7 @@ namespace ZW.Presenters.Presenters.Animals
     {
         private const float SpawnHeight = 0.5f;
 
-        private readonly IInstantiateSystem _instantiateSystem;
+        private readonly IViewPoolService _viewPoolService;
         private readonly IWorldContainerView _worldContainerView;
         private readonly IAnimalActorProvider _actorProvider;
         private readonly IAnimalPositionSyncSystem _positionSyncSystem;
@@ -35,7 +35,7 @@ namespace ZW.Presenters.Presenters.Animals
             IAnimalProvider animalProvider,
             IAnimalSpawnedStream spawnedStream,
             IAnimalDiedStream diedStream,
-            IInstantiateSystem instantiateSystem,
+            IViewPoolService viewPoolService,
             IWorldContainerView worldContainerView,
             IAnimalActorProvider actorProvider,
             IAnimalPositionSyncSystem positionSyncSystem,
@@ -43,7 +43,7 @@ namespace ZW.Presenters.Presenters.Animals
             IAnimalObstacleSystem obstacleSystem,
             IUpdateSystem updateSystem)
         {
-            _instantiateSystem = instantiateSystem;
+            _viewPoolService = viewPoolService;
             _worldContainerView = worldContainerView;
             _actorProvider = actorProvider;
             _positionSyncSystem = positionSyncSystem;
@@ -70,7 +70,7 @@ namespace ZW.Presenters.Presenters.Animals
 
         private async UniTaskVoid SpawnAsync(IAnimalModel animal)
         {
-            var actor = await _instantiateSystem.Instantiate<IAnimalActor>(
+            var actor = await _viewPoolService.Get<IAnimalActor>(
                 animal.Entity.Prefab,
                 _worldContainerView.AnimalsContainer,
                 _worldContainerView.LifetimeToken);
@@ -82,7 +82,7 @@ namespace ZW.Presenters.Presenters.Animals
 
             if (animal.State != AnimalState.Alive)
             {
-                actor.SelfDestroy();
+                _viewPoolService.Release(animal.Entity.Prefab, actor);
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace ZW.Presenters.Presenters.Animals
             }
 
             _actorProvider.Unregister(animal.Uid);
-            actor.SelfDestroy();
+            _viewPoolService.Release(animal.Entity.Prefab, actor);
         }
 
         private void OnCollided(int uid, IAnimalActor other)
