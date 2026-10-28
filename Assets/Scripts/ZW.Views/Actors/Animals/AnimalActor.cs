@@ -8,7 +8,11 @@ namespace ZW.Views.Actors.Animals
     [RequireComponent(typeof(Rigidbody))]
     public class AnimalActor : MonoBehaviour, IAnimalActor
     {
+        private static readonly int SpeedHash = Animator.StringToHash("Speed");
+        private static readonly int JumpHash = Animator.StringToHash("Jump");
+
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private Animator _animator;
         [SerializeField] private TMP_Text _label;
         [SerializeField] private Vector3 _labelOffset = new(0f, 2.5f, -1f);
 
@@ -31,6 +35,12 @@ namespace ZW.Views.Actors.Animals
             if (horizontalVelocity.sqrMagnitude > 0f)
             {
                 _rigidbody.MoveRotation(Quaternion.LookRotation(horizontalVelocity.normalized, Vector3.up));
+            }
+
+            _animator.SetFloat(SpeedHash, horizontalVelocity.magnitude);
+            if (verticalVelocity > 0f)
+            {
+                _animator.SetTrigger(JumpHash);
             }
         }
 
