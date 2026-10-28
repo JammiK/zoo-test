@@ -1,0 +1,16 @@
+{
+    "name": "JG.Logic.Core.Interfaces",
+    "rootNamespace": "",
+    "references": [
+        "GUID:037c935d6c1884081af8e5a1e57ceacf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

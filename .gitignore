@@ -112,3 +112,17 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# IDE
+.idea/
+.vscode/
+*.sln.DotSettings
+
+# AI agent instructions and tooling
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+.claude/
+.mcp.json
+/[Pp]roject[Ss]ettings/Packages/com.unity.ai.assistant/
+/[Pp]roject[Ss]ettings/Packages/com.unity.pipeline/

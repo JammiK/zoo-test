@@ -1,0 +1,18 @@
+{
+    "name": "ZW.Logic.Models",
+    "rootNamespace": "ZW.Logic.Models",
+    "references": [
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Data.Entities.Interfaces"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

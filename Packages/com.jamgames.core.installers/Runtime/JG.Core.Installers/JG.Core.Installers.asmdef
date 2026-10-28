@@ -1,0 +1,16 @@
+{
+    "name": "JG.Core.Installers",
+    "references": [
+        "GUID:0ed3f3e3c69044a8c8643d6c0dd2a94c",
+        "GUID:ab9c595adf2cd42498ebc0b81b5d0c81"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

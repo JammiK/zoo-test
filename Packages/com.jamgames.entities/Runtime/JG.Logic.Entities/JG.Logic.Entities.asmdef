@@ -1,0 +1,25 @@
+{
+    "name": "JG.Logic.Entities",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ae3ad00e4979b40fa8b639b8d0e2b16e",
+        "GUID:e59c95b6626214fdf915afa407b3dadc",
+        "GUID:2a9b6095058c642de9428e4acf1ff1ab",
+        "GUID:e3d38ad765de54fd993c493674b2271e",
+        "GUID:f4a10f37e159f4f6d84c7640cb5e6314",
+        "GUID:b6337ee79b30c4e2fb225a4c1f195a91",
+        "GUID:5f68fb4ea3f6a4c059e37c2e931dcfd6",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:58eb629bf22b84c82b29d2cc5f498016",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

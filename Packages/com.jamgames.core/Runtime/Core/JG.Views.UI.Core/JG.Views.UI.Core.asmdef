@@ -1,0 +1,16 @@
+{
+    "name": "JG.Views.UI.Core",
+    "references": [
+        "GUID:a73752d8daa794df99a95db5ab2f6502",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

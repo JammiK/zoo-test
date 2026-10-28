@@ -1,0 +1,21 @@
+{
+    "name": "IR.Data.Generators",
+    "references": [
+        "GUID:cdbf9ce4c129a423b9e71c02152c21a1",
+        "GUID:e59c95b6626214fdf915afa407b3dadc",
+        "GUID:1b3845511960d49ba9bb44791f62f89a",
+        "GUID:20a7bc7a27d9b44c7a1dd1322c081d17",
+        "GUID:037c935d6c1884081af8e5a1e57ceacf"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

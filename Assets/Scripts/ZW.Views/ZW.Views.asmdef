@@ -1,0 +1,24 @@
+{
+    "name": "ZW.Views",
+    "rootNamespace": "ZW.Views",
+    "references": [
+        "ZW.Views.Models",
+        "ZW.Views.Interfaces",
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Views.UI.Core.Interfaces",
+        "JG.Views.UI.Core",
+        "JG.Views.Actors.Core",
+        "JG.Core.Installers.Containers",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

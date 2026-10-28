@@ -1,0 +1,15 @@
+{
+    "name": "JG.Data.Interfaces",
+    "references": [
+        "GUID:e59c95b6626214fdf915afa407b3dadc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

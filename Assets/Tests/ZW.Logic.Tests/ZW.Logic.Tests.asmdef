@@ -1,0 +1,31 @@
+{
+    "name": "ZW.Logic.Tests",
+    "rootNamespace": "ZW.Logic.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "ZW.Logic",
+        "ZW.Logic.Interfaces",
+        "ZW.Logic.Models",
+        "ZW.Data",
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "JG.Data.Entities.Interfaces",
+        "JG.Data.Interfaces"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

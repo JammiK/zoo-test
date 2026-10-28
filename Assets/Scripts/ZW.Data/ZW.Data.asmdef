@@ -1,0 +1,23 @@
+{
+    "name": "ZW.Data",
+    "rootNamespace": "ZW.Data",
+    "references": [
+        "ZW.Data.Models",
+        "ZW.Data.Interfaces",
+        "JG.Data.Entities.Interfaces",
+        "JG.Data.Entities",
+        "JG.DataManagers.Entities.Interfaces",
+        "JG.Core.Installers.Containers",
+        "JG.Data",
+        "JG.Data.Interfaces"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

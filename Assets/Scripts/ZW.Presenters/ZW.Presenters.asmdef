@@ -1,0 +1,32 @@
+{
+    "name": "ZW.Presenters",
+    "rootNamespace": "ZW.Presenters",
+    "references": [
+        "ZW.Presenters.Interfaces",
+        "ZW.Data.Interfaces",
+        "ZW.Data.Models",
+        "ZW.Logic.Interfaces",
+        "ZW.Logic.Models",
+        "ZW.Views.Interfaces",
+        "ZW.Views.Models",
+        "JG.Data.Entities.Interfaces",
+        "JG.Logic.Core.Interfaces",
+        "JG.Logic.Streams.Interfaces",
+        "JG.Presenters.Core.Interfaces",
+        "JG.Core.Installers.Containers",
+        "UniRx",
+        "UniTask",
+        "JG.Views.UI.Core.Interfaces",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

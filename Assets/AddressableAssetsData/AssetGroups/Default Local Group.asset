@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: 352b2ea572ab17e4e8a279e0c7a0b580
+  m_SerializeEntries:
+  - m_GUID: 70b9b4cf9e0e9f44ebb36ec7fe6947b0
+    m_Address: Assets/Prefabs/Animals/Frog.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71fdae66870c9014a9cbd202f5ac3676
+    m_Address: Assets/Prefabs/Levels/Meadow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7375d5edf2d6cba47b71acab8d91e49a
+    m_Address: Assets/Prefabs/Effects/TastyLabel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abd43ffa66b9cd849869dcf5030564c2
+    m_Address: Assets/Prefabs/Animals/Snake.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 64d7a93148a9e814e8a09eb8f054864d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 361091bb0631eae419a674c3e985a8fe, type: 2}
+    - {fileID: 11400000, guid: 775c30e3c89be5641a806aea035b2c25, type: 2}
