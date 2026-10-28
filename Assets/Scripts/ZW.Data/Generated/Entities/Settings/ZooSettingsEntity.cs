@@ -30,6 +30,8 @@ namespace ZW.Data.Generated.Entities.Settings
         
         private float _tastyLabelDuration;
         
+        private float _tastyLabelRiseDistance;
+        
         private string _tastyLabelPrefab;
         
         private float _autosaveInterval;
@@ -105,6 +107,18 @@ namespace ZW.Data.Generated.Entities.Settings
             set
             {
                 this._tastyLabelDuration = value;
+            }
+        }
+        
+        public float TastyLabelRiseDistance
+        {
+            get
+            {
+                return this._tastyLabelRiseDistance;
+            }
+            set
+            {
+                this._tastyLabelRiseDistance = value;
             }
         }
         

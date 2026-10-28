@@ -1,6 +1,6 @@
 # Zoo World
 
-A test assignment: a 3D zoo viewed from a top-down camera. Every 1–2 seconds a new animal appears and wanders around the field. The frog (prey) jumps a fixed distance, the snake (predator) crawls in a straight line. A predator eats prey on collision; when two predators meet, only one survives. A "Tasty!" label pops up above the winner, and death counters are shown in the top-right corner.
+A test assignment: a 3D zoo viewed from a top-down camera. Every 1–2 seconds a new animal appears and wanders around the field. The frog (prey) jumps a fixed distance, the snake (predator) crawls in a straight line. A predator eats prey on collision; when two predators meet, only one survives. A "Tasty!" label pops up at the collision point, floats up and fades out, and death counters are shown in the top-right corner.
 
 ## Running
 
@@ -18,7 +18,7 @@ A test assignment: a 3D zoo viewed from a top-down camera. Every 1–2 seconds a
 | Snake: linear movement | `LinearMovementStrategy` + `snake_crawl` asset (`Speed`) |
 | Physics collisions, prey bounce off each other | `Rigidbody` + colliders on actors |
 | Predator eats anyone; predator vs predator — one survives | `PredationService` (food chain rules) + `AnimalDuelService` (higher `Strength` wins, random on a tie) |
-| "Tasty!" above the predator | `TastyLabelPresenter` + `TastyLabelView` (pooled) |
+| "Tasty!" above the predator | `TastyLabelPresenter` + `TastyLabelView` (pooled): spawned at the contact point, floats up and fades out |
 | Prey and predator death counters (uGUI, top-right) | `DeathStatsPresenter` → `DeathCounterView` |
 | An animal that leaves the screen comes back | `AreaReturnService` (guaranteed turn back into the area) |
 | DI, no ECS | Zenject, layered architecture below |
